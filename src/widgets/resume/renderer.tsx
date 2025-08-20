@@ -48,6 +48,8 @@ function renderNode(node: Nodes, data: ResumeData): React.ReactNode {
 function renderContainer(node: ContainerNode, data: ResumeData) {
   const { children, className } = node;
 
+  console.log(children);
+
   return (
     <div className={cn(`flex`, className)}>
       {children.map((child) => (

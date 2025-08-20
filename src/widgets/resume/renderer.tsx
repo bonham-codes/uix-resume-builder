@@ -17,7 +17,7 @@ export function ResumeRenderer({ template, data }: RenderProps) {
       className={cn(page.className)}
       style={{
         width: page.width ?? 794, // ~ A4 at 96dpi
-        height: page.height ?? 1122,
+        height: page.height,
         padding: page.padding ?? 24,
         background: page.background ?? 'white',
         fontFamily: page.fontFamily,
@@ -81,9 +81,22 @@ function renderText(node: TextNode, data: ResumeData) {
 }
 
 function renderList(node: ListNode, data: ResumeData) {
-  const { pathWithFallback, presentation } = node;
-
+  const { pathWithFallback, presentation, transform } = node;
   const resolved = resolvePath({ data, ...pathWithFallback });
+
+  if (!Array.isArray(resolved)) {
+    return null;
+  }
+
+  if (transform?.variant === 'flatten') {
+    const flattened = resolved.flatMap((item) => item[transform.key]);
+
+    return (
+      <div className={cn('flex flex-wrap', node.className)}>
+        {flattened.map((child) => renderNode(presentation[0], child))}
+      </div>
+    );
+  }
 
   return (
     <div className={cn('flex flex-wrap', node.className)}>

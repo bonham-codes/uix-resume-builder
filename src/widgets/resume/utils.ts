@@ -1,6 +1,10 @@
-import { DataBindingPath, ResumeData } from './types';
+import type { DataBindingPath, ResumeData, ResumeDataValue } from './types';
 
-export function resolvePath({ data, path, fallback }: { data: ResumeData } & DataBindingPath): string | Array<unknown> {
+export function resolvePath({
+  data,
+  path,
+  fallback,
+}: { data: ResumeData } & DataBindingPath): ResumeDataValue | Array<ResumeDataValue> {
   if (!path) {
     return data;
   }

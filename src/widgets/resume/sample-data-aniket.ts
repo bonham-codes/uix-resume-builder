@@ -1,5 +1,6 @@
 export const sampleDataAniket = {
   name: 'Aniket Saxena',
+  title: 'Software Engineer',
   contact: {
     city: 'Bengaluru, India',
     phone: '+91-6399143501',

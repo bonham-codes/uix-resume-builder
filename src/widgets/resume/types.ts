@@ -33,6 +33,10 @@ export interface ListNode extends TemplateNode {
   type: 'list';
   pathWithFallback: DataBindingPath;
   presentation: Nodes[];
+  transform?: {
+    variant: 'flatten';
+    key: string;
+  };
 }
 
 export interface LinkNode extends TemplateNode {
@@ -43,4 +47,6 @@ export interface LinkNode extends TemplateNode {
 
 export type Nodes = ContainerNode | TextNode | SeperatorNode | ListNode | LinkNode;
 
-export type ResumeData = Record<string, unknown>;
+export type ResumeDataValue = string | number;
+
+export type ResumeData = Record<string, ResumeDataValue> | Array<Record<string, ResumeDataValue>> | ResumeDataValue;

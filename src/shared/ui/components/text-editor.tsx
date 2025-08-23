@@ -26,7 +26,6 @@ export interface TextEditorProps {
   toolbarButtons?: (
     editor: ReturnType<typeof useEditor>
   ) => ToolbarButtonConfig[];
-  showHeadingSelect?: boolean;
 }
 
 const TextEditor = ({
@@ -37,16 +36,16 @@ const TextEditor = ({
   showToolbar = true,
   toolbarButtonClassName = "",
   toolbarButtons,
-  showHeadingSelect = true,
 }: TextEditorProps) => {
   const [headingLevel, setHeadingLevel] = useState(1);
 
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        italic: false, 
+        italic: false,
       }),
       Italic,
+      
       Underline,
 
       Link.configure({
@@ -57,7 +56,7 @@ const TextEditor = ({
       ...extensions,
     ],
     content,
-    
+
     editorProps: {
       attributes: {
         class: cn("focus:outline-none min-h-[250px]", editorClassName),
@@ -98,32 +97,28 @@ const TextEditor = ({
   return (
     <div className="flex flex-col">
       {showToolbar && (
-
         <div className="flex flex-row flex-wrap gap-2 mb-2">
-          {showHeadingSelect && (
-            <div className="relative">
-              <button className="p-2">
-                <FaHeading />
-              </button>
+          <div className="relative">
+            <button className="p-2">
+              <FaHeading />
+            </button>
 
-              <select
-                value={headingLevel}
-                onChange={(e) => {
-                  const level = Number(e.target.value) as 1 | 2 | 3 | 4 | 5 | 6;
-                  setHeadingLevel(level);
-                  editor.chain().focus().toggleHeading({ level }).run();
-                }}
-                className="absolute top-0 left-0 opacity-0 w-full h-full cursor-pointer"
-              >
-                {[1, 2, 3, 4, 5, 6].map((level) => (
-                  <option key={level} value={level}>
-                    H{level}
-                  </option>
-                ))}
-
-              </select>
-            </div>
-          )}
+            <select
+              value={headingLevel}
+              onChange={(e) => {
+                const level = Number(e.target.value) as 1 | 2 | 3 | 4 | 5 | 6;
+                setHeadingLevel(level);
+                editor.chain().focus().toggleHeading({ level }).run();
+              }}
+              className="absolute top-0 left-0 opacity-0 w-full h-full cursor-pointer"
+            >
+              {[1, 2, 3, 4, 5, 6].map((level) => (
+                <option key={level} value={level}>
+                  H{level}
+                </option>
+              ))}
+            </select>
+          </div>
 
           {buttons.map(({ icon, command, isActive }, i) =>
             renderButton(icon, command, isActive, i)

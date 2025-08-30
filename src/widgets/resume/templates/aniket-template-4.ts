@@ -105,7 +105,7 @@ const aniketTwoColumnTemplate = {
                 id: 'summary-text',
                 type: 'text',
                 pathWithFallback: { path: 'data.summary.text' },
-                className: 'text-xs text-zinc-700 leading-relaxed text-justify',
+                className: 'text-xs text-zinc-700 leading-relaxed',
               },
             ],
           },
@@ -172,7 +172,8 @@ const aniketTwoColumnTemplate = {
                         presentation: [
                           {
                             type: 'text',
-                            className: "text-xs text-zinc-700 before:content-['▹'] before:text-indigo-500 before:mr-1",
+                            className:
+                              "text-xs text-zinc-700 before:content-['>'] before:text-indigo-500 before:font-bold before:mr-1",
                           },
                         ],
                       },

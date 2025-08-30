@@ -24,8 +24,9 @@ const aniketTemplate = {
             id: 'name-text',
             type: 'text',
             pathWithFallback: { path: 'data.name', fallback: 'Your Name' },
-            className: 'tracking-wide text-3xl text-center font-bold',
+            className: 'tracking-wide text-3xl text-center font-bold text-red-500',
           },
+
           {
             id: 'contact-section',
             type: 'container',

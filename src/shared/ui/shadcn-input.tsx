@@ -1,8 +1,12 @@
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/shared/lib/utils";
 
-function ShadcnInput({ className, type, ...props }: React.ComponentProps<"input">) {
+function ShadcnInput({
+  className,
+  type,
+  ...props
+}: React.ComponentProps<"input">) {
   return (
     <input
       type={type}
@@ -15,7 +19,7 @@ function ShadcnInput({ className, type, ...props }: React.ComponentProps<"input"
       )}
       {...props}
     />
-  )
+  );
 }
 
 export { ShadcnInput };

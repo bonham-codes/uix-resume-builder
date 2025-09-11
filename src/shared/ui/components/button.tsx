@@ -1,7 +1,7 @@
 import * as React from "react";
 import { type VariantProps } from "class-variance-authority";
 import { buttonVariants, ShadcnButton } from "../shadcn-button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import LoadingIcon from "./icons/loading-icon";
 
 interface ButtonProps
@@ -42,9 +42,7 @@ const Button = ({
       )}
       {...props}
     >
-      {loading && (
-       <LoadingIcon/>
-      )}
+      {loading && <LoadingIcon />}
 
       {leftIcon && <span className="mr-1">{leftIcon}</span>}
 

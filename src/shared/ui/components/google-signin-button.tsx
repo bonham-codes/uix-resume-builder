@@ -13,7 +13,7 @@ export default function GoogleSignInButton() {
   return (
     <Button
       onClick={handleGoogleSignIn}
-      className="py-8 px-6 bg-[rgba(12,17,24,1)] text-white text-2xl font-semibold rounded-xl border-2 border-white hover:scale-105 shadow-[0_1px_2px_0_rgba(0,0,0,0.04)] transition-all duration-300 cursor-pointer"
+      className="py-8 w-[280px] bg-[rgba(12,17,24,1)] text-white text-lg font-semibold rounded-xl border-2 border-white hover:scale-105 shadow-[0_1px_2px_0_rgba(0,0,0,0.04)] transition-all duration-300 cursor-pointer"
     >
       <div className="flex items-center justify-center gap-3">
         <Image

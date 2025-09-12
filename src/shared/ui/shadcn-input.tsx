@@ -1,6 +1,6 @@
 import { cn } from '@shared/lib/cn';
 
-import * as React from 'react';
+import type * as React from 'react';
 
 function ShadcnInput({ className, type, ...props }: React.ComponentProps<'input'>) {
   return (

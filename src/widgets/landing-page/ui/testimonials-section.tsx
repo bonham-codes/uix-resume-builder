@@ -1,50 +1,22 @@
-"use client";
-import { useCallback, useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
-import type { EmblaOptionsType, EmblaCarouselType } from "embla-carousel";
+'use client';
 
-const testimonials = [
-  {
-    img: "images/testimonial-img.svg",
-    text: `"I built my resume in minutes with this tool, and it helped me land an interview at Google. The clean, professional template made my profile stand out—super simple, super fast, and truly effective!"`,
-    name: "Babu Rao",
-    role: "Hired At Google",
-    position: "Product Designer",
-  },
-
-  {
-    img: "images/testimonial-img.svg",
-    text: `"This builder made job applications so much easier. The templates are professional and the interface is intuitive. Highly recommend!"`,
-    name: "Sara Khan",
-    role: "Hired At Microsoft",
-    position: "UX Designer",
-  },
-
-  {
-    img: "images/testimonial-img.svg",
-    text: `"The templates are so professional and ATS-friendly. It boosted my chances massively and helped me stand out from other candidates."`,
-    name: "John Smith",
-    role: "Hired At Amazon",
-    position: "Software Engineer",
-  },
-];
+import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
+import Autoplay from 'embla-carousel-autoplay';
+import useEmblaCarousel from 'embla-carousel-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useCallback, useEffect, useState } from 'react';
+import { testimonials } from '../models/constants';
 
 export default function Testimonials() {
   const options: EmblaOptionsType = {
     loop: true,
-    align: "center",
+    align: 'center',
     duration: 30,
   };
 
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, [
-    Autoplay({ delay: 4000, stopOnInteraction: false }),
-  ]);
+  const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay({ delay: 4000, stopOnInteraction: false })]);
 
   const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -54,10 +26,6 @@ export default function Testimonials() {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
-  const onInit = useCallback((emblaApi: EmblaCarouselType) => {
-    setScrollSnaps(emblaApi.scrollSnapList());
-  }, []);
-
   const onSelect = useCallback((emblaApi: EmblaCarouselType) => {
     setSelectedIndex(emblaApi.selectedScrollSnap());
   }, []);
@@ -65,12 +33,10 @@ export default function Testimonials() {
   useEffect(() => {
     if (!emblaApi) return;
 
-    onInit(emblaApi);
     onSelect(emblaApi);
-    emblaApi.on("reInit", onInit);
-    emblaApi.on("reInit", onSelect);
-    emblaApi.on("select", onSelect);
-  }, [emblaApi, onInit, onSelect]);
+    emblaApi.on('reInit', onSelect);
+    emblaApi.on('select', onSelect);
+  }, [emblaApi, onSelect]);
 
   return (
     <section className="relative py-16">
@@ -88,12 +54,11 @@ export default function Testimonials() {
         <h2
           className="text-center font-black leading-none tracking-tight h-[120px] overflow-hidden"
           style={{
-            fontSize: "168px",
-            background:
-              "linear-gradient(180deg, rgba(179, 179, 179, 1) 28%, rgba(255, 255, 255, 0) 94%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
+            fontSize: '168px',
+            background: 'linear-gradient(180deg, rgba(179, 179, 179, 1) 28%, rgba(255, 255, 255, 0) 94%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
           }}
         >
           Testimonials
@@ -105,27 +70,20 @@ export default function Testimonials() {
           <div
             className="absolute -left-[150px] -top-[214px] w-[604px] h-[604px] rounded-full blur-[100px]"
             style={{
-              background:
-                "linear-gradient(124deg, rgba(37, 122, 255, 1) 40%, rgba(23, 23, 23, 1) 55%)",
+              background: 'linear-gradient(124deg, rgba(37, 122, 255, 1) 40%, rgba(23, 23, 23, 1) 55%)',
             }}
           ></div>
 
           <div
             className="absolute -right-[120px] bottom-[-150px] w-[300px] h-[300px] rounded-full blur-[120px]"
             style={{
-              background: `linear-gradient(
-    200deg,
-    rgba(255, 176, 138, 1) 30%,
-    rgba(233, 59, 54, 1) 30%
-  )`,
+              background: `linear-gradient(200deg, rgba(255, 176, 138, 1) 30%, rgba(233, 59, 54, 1) 30%)`,
             }}
           ></div>
 
           <div className="relative z-10 flex flex-col justify-center gap-18 px-[69px] h-full">
             <div className="flex flex-col gap-2">
-              <h3 className="text-[68px] font-semibold leading-tight tracking-tight text-[rgb(240,247,255)]">
-                10K+
-              </h3>
+              <h3 className="text-[68px] font-semibold leading-tight tracking-tight text-[rgb(240,247,255)]">10K+</h3>
 
               <p className="text-[32px] font-normal leading-tight tracking-tight text-[rgb(242,242,242)]">
                 Resumes delivered
@@ -133,9 +91,7 @@ export default function Testimonials() {
             </div>
 
             <div className="flex flex-col gap-2 mt-18">
-              <h3 className="text-[68px] font-semibold leading-tight tracking-tight text-[rgb(240,247,255)]">
-                77.8%
-              </h3>
+              <h3 className="text-[68px] font-semibold leading-tight tracking-tight text-[rgb(240,247,255)]">77.8%</h3>
 
               <p className="text-[32px] font-normal leading-tight tracking-tight text-[rgb(242,242,242)]">
                 Higher chance of
@@ -150,10 +106,7 @@ export default function Testimonials() {
           <div className="overflow-hidden rounded-[36px]" ref={emblaRef}>
             <div className="flex">
               {testimonials.map((testimonial, index) => (
-                <div
-                  key={index}
-                  className="flex-[0_0_100%] min-w-0 relative h-[679px]"
-                >
+                <div key={index} className="flex-[0_0_100%] min-w-0 relative h-[679px]">
                   <div
                     className="absolute inset-0 bg-cover bg-center"
                     style={{
@@ -171,20 +124,14 @@ export default function Testimonials() {
                       </p>
 
                       <div className="flex flex-col gap-1">
-                        <p className="text-xl font-normal leading-tight text-white">
-                          {testimonial.name}
-                        </p>
+                        <p className="text-xl font-normal leading-tight text-white">{testimonial.name}</p>
 
                         <div className="flex items-center gap-2">
-                          <span className="text-xl font-semibold leading-tight text-white">
-                            {testimonial.role}
-                          </span>
+                          <span className="text-xl font-semibold leading-tight text-white">{testimonial.role}</span>
 
                           <div className="w-2 h-2 rounded-full bg-white"></div>
 
-                          <span className="text-xl font-semibold leading-tight text-white">
-                            {testimonial.position}
-                          </span>
+                          <span className="text-xl font-semibold leading-tight text-white">{testimonial.position}</span>
                         </div>
                       </div>
                     </div>
@@ -197,47 +144,24 @@ export default function Testimonials() {
           <div className="absolute bottom-12 right-10 flex items-center gap-8 z-20">
             <button
               onClick={scrollPrev}
-              className="w-16 h-16 rounded-full
-flex items-center justify-center
-text-white
-z-20
-transition-all
-
-bg-[rgb(0,95,242)]/20
-backdrop-blur-md
-border-t border-b border-white/40
--rotate-45
-disabled:opacity-40
-button-glass"
+              type="button"
+              className="w-16 h-16 rounded-full flex items-center justify-center text-white z-20 transition-all
+                bg-[rgb(0,95,242)]/20 backdrop-blur-md border-t border-b border-white/40 -rotate-45 disabled:opacity-40 button-glass"
             >
               <ChevronLeft className="w-8 h-8 text-white rotate-45" />
             </button>
 
             <span className="text-xl min-w-[63px] text-right">
-              <span className="font-semibold text-white">
-                {String(selectedIndex + 1).padStart(2, "0")}/
-              </span>
+              <span className="font-semibold text-white">{String(selectedIndex + 1).padStart(2, '0')}/</span>
 
-              <span className="text-gray-700 font-normal">
-                {String(testimonials.length).padStart(2, "0")}
-              </span>
+              <span className="text-gray-700 font-normal">{String(testimonials.length).padStart(2, '0')}</span>
             </span>
 
             <button
               onClick={scrollNext}
-              className="w-16 h-16
-rounded-full
-flex items-center justify-center
-text-white
-z-20
-transition-all
-
-bg-[rgb(0,95,242)]/20
-backdrop-blur-md
-border-t border-b border-white/40
-
-rotate-45
-disabled:opacity-40
+              type="button"
+              className="w-16 h-16 rounded-full flex items-center justify-center text-white z-20 transition-all
+                bg-[rgb(0,95,242)]/20 backdrop-blur-md  border-t border-b border-white/40  rotate-45 disabled:opacity-40
 "
             >
               <ChevronRight className="w-8 h-8 text-white -rotate-45" />

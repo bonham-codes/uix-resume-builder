@@ -1,21 +1,22 @@
-import * as React from "react";
+import type * as React from 'react';
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuCheckboxItem,
+  DropdownMenuPortal,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-  DropdownMenuGroup,
-  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
-} from "../shadcn-dropdown";
+  DropdownMenuTrigger,
+} from '../shadcn-dropdown';
+
 interface DropdownProps {
   trigger: React.ReactNode;
   children: React.ReactNode;
@@ -26,9 +27,7 @@ const Dropdown = ({ trigger, children, className }: DropdownProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
-      <DropdownMenuContent className={className}>
-        {children}
-      </DropdownMenuContent>
+      <DropdownMenuContent className={className}>{children}</DropdownMenuContent>
     </DropdownMenu>
   );
 };

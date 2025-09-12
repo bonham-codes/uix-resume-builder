@@ -7,10 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": [
-      "src/**/*.{ts,tsx,js,jsx,mjs,cjs,json,css,html}",
-      "!src/app/routeTree.gen.ts"
-    ]
+    "includes": ["src/**/*.{ts,tsx,js,jsx,mjs,cjs,json,css,html}", "!src/app/routeTree.gen.ts"]
   },
   "formatter": {
     "enabled": true,
@@ -139,42 +136,20 @@
               ":NODE:",
               ":THIRD_PARTY:",
               ":BLANK_LINE:",
-              [
-                "@app/**"
-              ],
+              ["@app/**"],
               ":BLANK_LINE:",
-              [
-                "@pages/**"
-              ],
+              ["@pages/**"],
               ":BLANK_LINE:",
-              [
-                "@widgets/**"
-              ],
+              ["@widgets/**"],
               ":BLANK_LINE:",
-              [
-                "@features/**"
-              ],
+              ["@features/**"],
               ":BLANK_LINE:",
-              [
-                "@entities/**"
-              ],
+              ["@entities/**"],
               ":BLANK_LINE:",
-              [
-                "@shared/**"
-              ],
-              [
-                "@styles/**",
-                "@config/**",
-                "@lib/**",
-                "@constants/**",
-                "@hooks/**",
-                "@utils/**",
-                "@api/**"
-              ],
+              ["@shared/**"],
+              ["@styles/**", "@config/**", "@lib/**", "@constants/**", "@hooks/**", "@utils/**", "@api/**"],
               ":BLANK_LINE:",
-              [
-                "./**"
-              ]
+              ["./**"]
             ]
           }
         }

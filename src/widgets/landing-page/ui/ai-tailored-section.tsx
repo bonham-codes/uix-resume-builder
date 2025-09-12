@@ -1,52 +1,12 @@
-"use client";
-import Image from "next/image";
-import { useState } from "react";
-import { motion } from "framer-motion";
+'use client';
 
-const companiesLeft = [
-  {
-    name: "Google",
-    logo: "images/google-logo.svg",
-    bgColor: "rgba(255, 241, 200, 1)",
-    position: { x: 0, y: 0 },
-  },
-  {
-    name: "Meta",
-    logo: "images/meta-logo.svg",
-    bgColor: "rgba(214, 235, 255, 1)",
-    position: { x: 44, y: 96 },
-  },
-  {
-    name: "Microsoft",
-    logo: "images/microsoft-logo.svg",
-    bgColor: "rgba(225, 255, 190, 1)",
-    position: { x: 88, y: 192 },
-  },
-];
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { useState } from 'react';
+import { companiesLeft, companiesRight } from '../models/constants';
 
-const companiesRight = [
-  {
-    name: "Apple",
-    logo: "images/apple-logo.svg",
-    bgColor: "rgb(0,0,0)",
-    position: { x: 106, y: 0 },
-  },
-  {
-    name: "NVIDIA",
-    logo: "images/nvidia-logo.svg",
-    bgColor: "rgba(206, 255, 120, 1)",
-    position: { x: 53, y: 96 },
-  },
-  {
-    name: "Amazon",
-    logo: "images/amazon-logo.svg",
-    bgColor: "rgb(255, 227, 190)",
-    position: { x: 0, y: 192 },
-  },
-];
-
-export default function AITailorSection() {
-  const [highlightColor, setHighlightColor] = useState("rgb(227, 227, 227)");
+export function AITailorSection() {
+  const [highlightColor, setHighlightColor] = useState('rgb(227, 227, 227)');
   const [activeCompany, setActiveCompany] = useState<string | null>(null);
 
   return (
@@ -60,8 +20,7 @@ export default function AITailorSection() {
         <div
           className="w-full h-full rounded-full blur-[125px]"
           style={{
-            background:
-              "linear-gradient(139deg, rgba(228,187,167,1) 23%, rgba(94,31,29,1) 39%, rgba(23,23,23,1) 67%)",
+            background: 'linear-gradient(139deg, rgba(228,187,167,1) 23%, rgba(94,31,29,1) 39%, rgba(23,23,23,1) 67%)',
           }}
         />
       </motion.div>
@@ -74,9 +33,7 @@ export default function AITailorSection() {
       >
         <span className="w-32 h-[1px] bg-gradient-to-r from-transparent to-gray-950 opacity-40"></span>
 
-        <span className="text-[18px] font-semibold text-[rgb(102,102,102)] whitespace-nowrap">
-          Don&apos;t Miss
-        </span>
+        <span className="text-[18px] font-semibold text-[rgb(102,102,102)] whitespace-nowrap">Don&apos;t Miss</span>
 
         <span className="w-32 h-[1px] bg-gradient-to-l from-transparent to-gray-950 opacity-40" />
       </motion.div>
@@ -87,9 +44,7 @@ export default function AITailorSection() {
         transition={{ duration: 1 }}
         className="mt-[50px] text-center flex flex-col items-center"
       >
-        <h2 className="text-[80px] font-black leading-[76px] text-blue-800">
-          AI Tailor Your Resume
-        </h2>
+        <h2 className="text-[80px] font-black leading-[76px] text-blue-800">AI Tailor Your Resume</h2>
 
         <h2
           className="text-black text-[80px] font-semibold leading-[76px]
@@ -118,7 +73,7 @@ export default function AITailorSection() {
                 setActiveCompany(company.name);
               }}
               onMouseLeave={() => {
-                setHighlightColor("rgb(227, 227, 227)");
+                setHighlightColor('rgb(227, 227, 227)');
                 setActiveCompany(null);
               }}
             >
@@ -129,24 +84,15 @@ export default function AITailorSection() {
                     style={{ backgroundColor: company.bgColor }}
                   >
                     <div className="relative w-[26px] h-[26px]">
-                      <Image
-                        src={company.logo}
-                        alt={company.name}
-                        fill
-                        className="object-contain"
-                      />
+                      <Image src={company.logo} alt={company.name} fill className="object-contain" />
                     </div>
                   </div>
 
-                  <span className="text-lg text-black font-normal tracking-[-0.26px]">
-                    {company.name}
-                  </span>
+                  <span className="text-lg text-black font-normal tracking-[-0.26px]">{company.name}</span>
 
                   <div className="w-0.5 h-0.5 rounded-full bg-[rgb(23,23,23)]" />
 
-                  <span className="text-lg text-black font-normal tracking-[-0.26px]">
-                    Head Of Product
-                  </span>
+                  <span className="text-lg text-black font-normal tracking-[-0.26px]">Head Of Product</span>
                 </div>
               </div>
             </motion.div>
@@ -163,12 +109,7 @@ export default function AITailorSection() {
             <div className="flex flex-col gap-12 w-[334px]">
               <div className="flex items-center gap-8">
                 <div className="w-[116px] h-[116px] bg-[#E5B89C] border border-white rounded-full relative overflow-hidden">
-                  <Image
-                    src="images/profile.svg"
-                    alt="Akshat Agrawal"
-                    fill
-                    className="object-cover"
-                  />
+                  <Image src="images/profile.svg" alt="Akshat Agrawal" fill className="object-cover" />
                 </div>
 
                 <div className="flex flex-col justify-center gap-0.5">
@@ -184,20 +125,16 @@ export default function AITailorSection() {
                       className="text-xl
  font-semibold text-[rgb(102,102,102)] tracking-[-2%] leading-[1.2em]"
                     >
-                      {activeCompany
-                        ? `Head Of ${activeCompany}`
-                        : "Head Of Product"}
+                      {activeCompany ? `Head Of ${activeCompany}` : 'Head Of Product'}
                     </span>
                   </div>
                 </div>
               </div>
 
               <div className="flex flex-col gap-7 w-full">
-                {["Work Description:", "Keywords:"].map((title) => (
+                {['Work Description:', 'Keywords:'].map((title) => (
                   <div key={title} className="flex flex-col gap-4">
-                    <h4 className="text-[24px] font-semibold text-black tracking-[-3%] leading-[1.2em]">
-                      {title}
-                    </h4>
+                    <h4 className="text-[24px] font-semibold text-black tracking-[-3%] leading-[1.2em]">{title}</h4>
 
                     <div className="flex flex-col gap-3 mt-4">
                       {[320, 286, 334, 196].map((w, i) => (
@@ -236,7 +173,7 @@ export default function AITailorSection() {
                 setActiveCompany(company.name);
               }}
               onMouseLeave={() => {
-                setHighlightColor("rgb(227,227,227)");
+                setHighlightColor('rgb(227,227,227)');
                 setActiveCompany(null);
               }}
             >
@@ -247,24 +184,14 @@ export default function AITailorSection() {
                     style={{ backgroundColor: company.bgColor }}
                   >
                     <div className="relative w-[26px] h-[26px]">
-                      <Image
-                        src={company.logo}
-                        alt={company.name}
-                        fill
-                        className="object-contain"
-                      />
+                      <Image src={company.logo} alt={company.name} fill className="object-contain" />
                     </div>
-
                   </div>
-                  <span className="text-lg text-black font-normal tracking-[-0.26px]">
-                    {company.name}
-                  </span>
+                  <span className="text-lg text-black font-normal tracking-[-0.26px]">{company.name}</span>
 
                   <div className="w-0.5 h-0.5 rounded-full bg-[rgb(23,23,23)]" />
 
-                  <span className="text-lg text-black font-normal tracking-[-0.26px]">
-                    Head Of Product
-                  </span>
+                  <span className="text-lg text-black font-normal tracking-[-0.26px]">Head Of Product</span>
                 </div>
               </div>
             </motion.div>
@@ -302,9 +229,7 @@ export default function AITailorSection() {
         custom={4}
         whileHover={{ scale: 1.05 }}
       >
-        <h3 className="text-xl font-semibold text-[rgb(23,23,23)]">
-          Highlight Relevant Skills
-        </h3>
+        <h3 className="text-xl font-semibold text-[rgb(23,23,23)]">Highlight Relevant Skills</h3>
         <p
           className="text-xl
  text-[rgb(102,102,102)]"
@@ -320,9 +245,7 @@ export default function AITailorSection() {
         custom={5}
         whileHover={{ scale: 1.05 }}
       >
-        <h3 className="font-semibold text-[rgb(23,23,23)]">
-          Smart Keyword Match
-        </h3>
+        <h3 className="font-semibold text-[rgb(23,23,23)]">Smart Keyword Match</h3>
         <p className="font-normal text-[rgb(102,102,102)]">
           Align with role-specific keywords to beat filters and stand out
         </p>

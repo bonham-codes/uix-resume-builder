@@ -1,31 +1,30 @@
-"use client";
-import useEmblaCarousel from "embla-carousel-react";
-import React, { useCallback, useEffect, useState } from "react";
-import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/shared/ui/components/button";
-import { cn } from "@/lib/utils";
-import Autoplay from "embla-carousel-autoplay";
-import type { EmblaOptionsType } from "embla-carousel";
+'use client';
+
+import { cn } from '@shared/lib/cn';
+import { Button } from '@shared/ui/components/button';
+
+import type { EmblaOptionsType } from 'embla-carousel';
+import Autoplay from 'embla-carousel-autoplay';
+import useEmblaCarousel from 'embla-carousel-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
+import React, { useCallback, useEffect, useState } from 'react';
+import { templates } from '../models/constants';
 
 export function TemplateCarousel() {
   const options: EmblaOptionsType = {
     loop: true,
-    align: "center",
+    align: 'center',
     duration: 30,
   };
 
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, [
-    Autoplay({ delay: 2000, stopOnInteraction: false }),
-  ]);
+  const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay({ delay: 2000, stopOnInteraction: false })]);
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const [canScrollPrev, setCanScrollPrev] = useState(false);
 
   const [canScrollNext, setCanScrollNext] = useState(false);
-
-  const [hoveredTemplate, setHoveredTemplate] = useState<number | null>(null);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
@@ -38,21 +37,14 @@ export function TemplateCarousel() {
 
   useEffect(() => {
     if (!emblaApi) return;
+
     onSelect(emblaApi);
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
+
+    emblaApi.on('select', onSelect);
+    emblaApi.on('reInit', onSelect);
   }, [emblaApi, onSelect]);
 
-  const scrollTo = useCallback(
-    (index: number) => emblaApi?.scrollTo(index),
-    [emblaApi]
-  );
-
- const templates = Array.from({ length: 5 }, (_, i) => ({
-  id: i + 1,
-  image: "images/image-14.svg",
-  name: `Template ${i + 1}`,
-}));
+  const scrollTo = useCallback((index: number) => emblaApi?.scrollTo(index), [emblaApi]);
 
   return (
     <div className="relative bg-[rgb(23,23,23)] text-white rounded-[36px] overflow-hidden min-h-[556px] m-4">
@@ -90,15 +82,10 @@ export function TemplateCarousel() {
         <div className="relative flex-1 flex flex-col">
           <div className="flex-1 flex items-center">
             <div className="pl-[61px]">
-                
               <div className="overflow-hidden w-[900px]" ref={emblaRef}>
                 <div className="flex gap-2 items-center">
-                  {templates.map((template, index) => (
-                    <div
-                      key={template.id}
-                      onMouseEnter={() => setHoveredTemplate(index)}
-                      onMouseLeave={() => setHoveredTemplate(null)}
-                    >
+                  {templates.map((template) => (
+                    <div key={template.id} className="group">
                       <div className="cursor-pointer h-full">
                         <div className="p-4 h-full">
                           <div className="relative w-[312px] h-[428px] bg-white/5 p-4 rounded-[20px] overflow-hidden">
@@ -116,11 +103,8 @@ export function TemplateCarousel() {
                                 variant="secondary"
                                 size="lg"
                                 className={cn(
-                                  "transform transition-all duration-500 ease-out",
-                                  hoveredTemplate === index
-                                    ? "translate-y-0 opacity-100"
-                                    : "translate-y-10 opacity-0",
-                                  "bg-[rgb(0,95,242)] hover:bg-[rgb(0,81,213)] text-[rgb(242,242,242)] border  border-gray-400 shadow-sm px-7 py-3 h-12 text-lg font-semibold rounded-xl"
+                                  'transform transition-all duration-500 ease-out translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100',
+                                  'bg-[rgb(0,95,242)] hover:bg-[rgb(0,81,213)] text-[rgb(242,242,242)] border  border-gray-400 shadow-sm px-7 py-3 h-12 text-lg font-semibold rounded-xl',
                                 )}
                               >
                                 Use This Template
@@ -139,41 +123,21 @@ export function TemplateCarousel() {
           <div className="absolute left-[29px] top-[31px] bottom-[31px] w-[141px] bg-gradient-to-r from-[rgb(23,23,23)] via-[rgb(23,23,23)]/86 to-transparent pointer-events-none" />
 
           <button
+            type="button"
             onClick={scrollPrev}
             disabled={!canScrollPrev}
-            className="absolute left-[39px] top-[246px] w-16 h-16 rounded-full
-  flex items-center justify-center
-  text-white
-  z-20
-  transition-all
-  -rotate-45
-
-  bg-[rgb(0,95,242)]/20
-  backdrop-blur-md
-  border-t border-b border-white/40
-  disabled:opacity-40"
+            className="absolute left-[39px] top-[246px] w-16 h-16 rounded-full flex items-center justify-center
+            text-white z-20 transition-all -rotate-45 bg-[rgb(0,95,242)]/20 backdrop-blur-md border-t border-b border-white/40 disabled:opacity-40"
           >
             <ChevronLeft className="w-10 h-10 rotate-45" />
           </button>
 
           <div className="absolute right-0 top-[31px] bottom-[31px] w-[181px] bg-gradient-to-l from-[rgb(23,23,23)] via-[rgb(23,23,23)]/86 to-transparent pointer-events-none" />
           <button
+            type="button"
             onClick={scrollNext}
             disabled={!canScrollNext}
-            className="
-  absolute right-[78px] top-[246px]
-  w-16 h-16
-  rounded-full
-  flex items-center justify-center
-  text-white
-  z-20
-  transition-all
-  rotate-45
-  bg-[rgb(0,95,242)]/20
-  backdrop-blur-md
-  border-t border-b border-white/40
-  disabled:opacity-40
-"
+            className="absolute right-[78px] top-[246px] w-16 h-16 rounded-full flex items-center justify-center text-white z-20 transition-all rotate-45 bg-[rgb(0,95,242)]/20 backdrop-blur-md border-t border-b border-white/40 disabled:opacity-40"
           >
             <ChevronRight className="w-10 h-10 -rotate-45" />
           </button>
@@ -182,13 +146,14 @@ export function TemplateCarousel() {
             <div className="flex items-center gap-3">
               {templates.map((_, index) => (
                 <button
+                  type="button"
                   key={index}
                   onClick={() => scrollTo(index)}
                   className={cn(
-                    "h-3 w-3 rounded-full transition-all duration-300 ease-in-out -rotate-45 backdrop-blur-md border-t border-b",
+                    'h-3 w-3 rounded-full transition-all duration-300 ease-in-out -rotate-45 backdrop-blur-md border-t border-b',
                     index === selectedIndex
-                      ? "scale-110 bg-white/60 border-white/60 shadow-lg"
-                      : "bg-white/10 hover:bg-white/50 hover:scale-105 border-white/70"
+                      ? 'scale-110 bg-white/60 border-white/60 shadow-lg'
+                      : 'bg-white/10 hover:bg-white/50 hover:scale-105 border-white/70',
                   )}
                 />
               ))}

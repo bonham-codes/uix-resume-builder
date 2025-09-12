@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { sendAuthCodeToBackend } from "@/shared/lib/google-auth";
 
-export default function GoogleCallback() {
+export default function GoogleCallbackClient() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [loading, setLoading] = useState(true);

@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import GoogleCallbackClient from "./GoogleCallbackClient";
+import GoogleCallbackClient from "./google-callback-client";
 
 export default function GoogleCallbackPage() {
   return (

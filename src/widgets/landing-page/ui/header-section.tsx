@@ -1,8 +1,17 @@
+"use client" 
+
 import Image from 'next/image';
 import React from 'react';
 import { Button } from '@/shared/ui/components/button';
+import { useRouter } from 'next/navigation';
 
 export function Header() {
+  const router = useRouter();
+
+  const handleSignIn = () => {
+    router.push('/auth-page'); 
+  };
+
   return (
     <header className="w-full flex items-center justify-between px-12 py-4">
       <div className="flex items-center gap-4">
@@ -22,6 +31,7 @@ export function Header() {
 
       <div className="flex items-center gap-7">
         <Button
+          onClick={handleSignIn}
           variant="ghost"
           size="sm"
           className="text-blue-900 hover:text-gray-900 font-semibold text-lg cursor-pointer"

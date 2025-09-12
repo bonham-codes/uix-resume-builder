@@ -1,5 +1,6 @@
 import React from "react";
 import HeroSection from "./hero-section";
+import { TemplateCarousel } from "./template-carousel";
 import Image from "next/image";
 import Header from "./header-section";
 
@@ -13,7 +14,7 @@ function LandingPage() {
         className="object-cover -z-10"
         priority
       />
-        <Header />
+      <Header />
 
       <div
         className="h-[724px] border-2 border-white rounded-[36px] m-4 mt-0 overflow-hidden"
@@ -26,6 +27,9 @@ function LandingPage() {
         <HeroSection />
       </div>
 
+      <div>
+        <TemplateCarousel />
+      </div>
     </div>
   );
 }

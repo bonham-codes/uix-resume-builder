@@ -16,8 +16,8 @@ interface ButtonProps
 
 const Button = ({
   children,
-  variant = "default",
-  size = "default",
+  variant = 'default',
+  size = 'default',
   loading = false,
   leftIcon,
   rightIcon,
@@ -35,13 +35,10 @@ const Button = ({
       size={size}
       disabled={isDisabled}
       asChild={asChild}
-      className={cn(
-        fullWidth && "w-full",
-        loading && "cursor-not-allowed",
-        className
-      )}
+      className={cn(fullWidth && 'w-full', loading && 'cursor-not-allowed', className)}
       {...props}
     >
+      {loading && <LoadingIcon />}
       {loading && <LoadingIcon />}
 
       {leftIcon && <span className="mr-1">{leftIcon}</span>}

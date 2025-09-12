@@ -32,7 +32,7 @@ const buttonVariants = cva(
   },
 );
 
-function ShadcnButton({
+function Button({
   className,
   variant,
   size,
@@ -47,4 +47,4 @@ function ShadcnButton({
   return <Comp data-slot="button" className={cn(buttonVariants({ variant, size, className }))} {...props} />;
 }
 
-export { ShadcnButton, buttonVariants };
+export { Button, buttonVariants };

@@ -130,24 +130,24 @@
     "actions": {
       "source": {
         "organizeImports": {
-          "level": "on",
+          "level": "off",
           "options": {
             "groups": [
               ":NODE:",
               ":THIRD_PARTY:",
               ":BLANK_LINE:",
-              ["@app/**"],
+              ["@/app/**"],
               ":BLANK_LINE:",
-              ["@pages/**"],
+              ["@/pages/**"],
               ":BLANK_LINE:",
-              ["@widgets/**"],
+              ["@/widgets/**"],
               ":BLANK_LINE:",
-              ["@features/**"],
+              ["@/features/**"],
               ":BLANK_LINE:",
-              ["@entities/**"],
+              ["@/entities/**"],
               ":BLANK_LINE:",
-              ["@shared/**"],
-              ["@styles/**", "@config/**", "@lib/**", "@constants/**", "@hooks/**", "@utils/**", "@api/**"],
+              ["@/shared/**"],
+              ["@/styles/**", "@/config/**", "@/lib/**", "@/constants/**", "@/hooks/**", "@/utils/**", "@/api/**"],
               ":BLANK_LINE:",
               ["./**"]
             ]

@@ -9,7 +9,6 @@ import React from 'react';
 export function LandingPage() {
   return (
     <div className="relative w-full h-full">
-      <Image src="images/landing-page-bg.svg" alt="Background" fill className="object-cover -z-10" priority />
       <Header />
 
       <div

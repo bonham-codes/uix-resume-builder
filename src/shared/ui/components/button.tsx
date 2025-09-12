@@ -1,8 +1,7 @@
 import LoadingIcon from '@shared/icons/loading-icon';
 import { cn } from '@shared/lib/cn';
-
 import type { VariantProps } from 'class-variance-authority';
-import { type buttonVariants, ShadcnButton } from '../shadcn-button';
+import { type buttonVariants, Button as ShadcnButton } from '../button';
 
 interface ButtonProps extends React.ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
   asChild?: boolean;

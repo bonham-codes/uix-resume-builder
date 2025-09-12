@@ -19,23 +19,26 @@ const aniketTemplate = {
         id: 'header-section',
         type: 'container',
         className: 'flex flex-col items-center justify-center w-full',
+        break: true,
         children: [
           {
             id: 'name-text',
             type: 'text',
-            pathWithFallback: { path: 'data.name', fallback: 'Your Name' },
+            pathWithFallback: { path: 'data.personalDetails.name', fallback: 'Your Name' },
             className: 'tracking-wide text-3xl text-center font-bold text-red-500',
+            break: false,
           },
 
           {
             id: 'contact-section',
             type: 'container',
             className: 'flex flex-row gap-1 items-center',
+            break: false,
             children: [
               {
-                id: 'city-text',
+                id: 'address-text',
                 type: 'text',
-                pathWithFallback: { path: 'data.contact.city', fallback: 'City' },
+                pathWithFallback: { path: 'data.personalDetails.address', fallback: 'City' },
                 variant: 'small',
                 className: 'text-neutral-700 text-sm',
               },
@@ -47,7 +50,7 @@ const aniketTemplate = {
               {
                 id: 'phone-text',
                 type: 'text',
-                pathWithFallback: { path: 'data.contact.phone', fallback: 'Phone' },
+                pathWithFallback: { path: 'data.personalDetails.phone', fallback: 'Phone' },
                 variant: 'small',
                 className: 'text-neutral-700 text-sm',
               },
@@ -60,7 +63,7 @@ const aniketTemplate = {
               {
                 id: 'email-link',
                 type: 'link',
-                pathWithFallback: { path: 'data.contact.email', fallback: 'Email' },
+                pathWithFallback: { path: 'data.personalDetails.email', fallback: 'Email' },
                 href: 'mailto:aniket@gmail.com',
                 className: 'text-neutral-700 text-sm',
               },
@@ -73,7 +76,7 @@ const aniketTemplate = {
               {
                 id: 'linkedin-text',
                 type: 'link',
-                pathWithFallback: { path: 'data.contact.linkedin', fallback: 'LinkedIn' },
+                pathWithFallback: { path: 'data.personalDetails.linkedin', fallback: 'LinkedIn' },
                 href: 'https://www.linkedin.com/in/aniket98/',
                 className: 'text-neutral-700 text-sm',
               },
@@ -86,20 +89,21 @@ const aniketTemplate = {
         type: 'container',
         id: 'summary-section',
         className: 'flex flex-col mt-2',
+        break: false,
         children: [
           {
             id: 'summary-heading',
             type: 'text',
-            pathWithFallback: { path: 'data.summary.heading' },
+            pathWithFallback: { path: 'data.professionalSummary.heading' },
             className: 'text-neutral-700 font-semibold text-sm',
           },
           { type: 'seperator', variant: 'line', className: 'my-1' },
           {
             id: 'summary-text',
-            type: 'text',
-            pathWithFallback: { path: 'data.summary.text' },
+            type: 'html',
+            pathWithFallback: { path: 'data.professionalSummary.description' },
             variant: 'body',
-            className: 'text-neutral-700 text-xs text-justify',
+            className: 'text-xs text-neutral-700 text-justify',
           },
         ],
       },
@@ -108,6 +112,7 @@ const aniketTemplate = {
         id: 'skills-section',
         type: 'container',
         className: 'flex flex-col mt-2',
+        break: false,
         children: [
           {
             id: 'skills-heading',
@@ -115,7 +120,9 @@ const aniketTemplate = {
             pathWithFallback: { path: 'data.skills.heading' },
             className: 'text-neutral-700 font-semibold text-sm',
           },
+
           { type: 'seperator', variant: 'line', className: 'my-1' },
+
           {
             type: 'list',
             id: 'skills',
@@ -159,19 +166,22 @@ const aniketTemplate = {
         id: 'experience-section',
         type: 'container',
         className: 'flex flex-col mt-2',
+        break: true,
         children: [
           {
             id: 'experience-heading',
             type: 'text',
             pathWithFallback: { path: 'data.experience.heading' },
             className: 'text-neutral-700 font-semibold text-sm',
+            break: false,
           },
-          { type: 'seperator', variant: 'line', className: 'my-1' },
+          { type: 'seperator', variant: 'line', className: 'my-1', break: false },
           {
             id: 'experience',
             type: 'list',
             pathWithFallback: { path: 'data.experience.list' },
             className: 'flex flex-col',
+            break: false,
             presentation: [
               {
                 type: 'container',
@@ -187,7 +197,7 @@ const aniketTemplate = {
                   {
                     id: 'experience-period',
                     type: 'text',
-                    pathWithFallback: { path: 'data.period' },
+                    pathWithFallback: { path: 'data.startDate' },
                     className: 'text-neutral-700 text-xs',
                   },
                 ],
@@ -200,7 +210,7 @@ const aniketTemplate = {
                   {
                     id: 'experience-role',
                     type: 'text',
-                    pathWithFallback: { path: 'data.role' },
+                    pathWithFallback: { path: 'data.position' },
                     className: 'text-neutral-700 text-xs italic',
                   },
                   {
@@ -213,12 +223,10 @@ const aniketTemplate = {
               },
               {
                 id: 'experience-bullets',
-                type: 'list',
-                pathWithFallback: { path: 'data.bullets' },
-                className: 'flex flex-col mb-4 mt-1.5 gap-0.5',
-                presentation: [
-                  { type: 'text', className: 'text-neutral-700 before:content-["•"] before:mr-1 text-xs text-justify' },
-                ],
+                type: 'html',
+                pathWithFallback: { path: 'data.description' },
+                className: 'flex flex-col mb-4 mt-1.5 gap-0.5 text-xs text-neutral-700 text-justify',
+                break: false,
               },
             ],
           },
@@ -251,13 +259,13 @@ const aniketTemplate = {
                   {
                     id: 'education-school',
                     type: 'text',
-                    pathWithFallback: { path: 'data.school' },
+                    pathWithFallback: { path: 'data.institution' },
                     className: 'text-neutral-700 text-base font-medium',
                   },
                   {
                     id: 'education-period',
                     type: 'text',
-                    pathWithFallback: { path: 'data.period' },
+                    pathWithFallback: { path: 'data.startDate' },
                     className: 'text-neutral-700 text-xs',
                   },
                 ],
@@ -270,13 +278,13 @@ const aniketTemplate = {
                   {
                     id: 'education-degree',
                     type: 'text',
-                    pathWithFallback: { path: 'data.degree' },
+                    pathWithFallback: { path: 'data.fieldOfStudy' },
                     className: 'text-neutral-700 text-xs italic',
                   },
                   {
                     id: 'education-grade',
                     type: 'text',
-                    pathWithFallback: { path: 'data.grade' },
+                    pathWithFallback: { path: 'data.startDate' },
                     className: 'text-neutral-700 text-xs italic',
                   },
                 ],

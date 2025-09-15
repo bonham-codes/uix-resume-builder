@@ -39,7 +39,6 @@ const Button = ({
       {...props}
     >
       {loading && <LoadingIcon />}
-      {loading && <LoadingIcon />}
 
       {leftIcon && <span className="mr-1">{leftIcon}</span>}
 

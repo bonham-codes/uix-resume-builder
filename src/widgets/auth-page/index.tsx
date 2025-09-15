@@ -17,6 +17,7 @@ import { AuthHeader } from "./ui/auth-header";
 import { VideoBackground } from "./ui/video-background";
 import Image from "next/image";
 import GoogleSignInButton from "@shared/ui/components/google-signin-button";
+import { cn } from "@shared/lib/utils";
 import LinkedInSignInButton from "@shared/ui/components/linkedIn-signin-button";
 
 export default function AuthPage() {
@@ -34,12 +35,23 @@ export default function AuthPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [socialAccounts, setSocialAccounts] = useState<string[]>([]);
+  const [showPassword, setShowPassword] = useState({
+    password: true,
+    confirmPassword: true,
+  });
+
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const codeInputRef = useRef<HTMLInputElement>(null);
 
+  const toggleShow = (field: "password" | "confirmPassword") => {
+    setShowPassword((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
   const checkEmailMutation = useCheckEmailExists();
   const verifyOtpMutation = useVerifyOtp();
   const registerMutation = useRegisterUser();
@@ -271,11 +283,13 @@ export default function AuthPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleEmailSubmit()}
                   placeholder="Enter email address"
-                  className={`w-[404px] rounded-xl border px-3 py-3 font-semibold bg-[rgba(242,242,242,1)] focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:text-base placeholder:leading-5.5 placeholder:-tracking-[0.18px] placeholder:font-normal placeholder:text-[rgba(201,201,201,1)] ${
-                    errors.email
-                      ? "border-red-500"
-                      : "border-[rgba(202,212,225,1)]"
-                  }`}
+                  className={cn(
+                    "w-[404px] rounded-xl border px-3 py-3 font-semibold bg-[rgba(242,242,242,1)] focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:text-base placeholder:leading-5.5 placeholder:-tracking-[0.18px] placeholder:font-normal placeholder:text-[rgba(201,201,201,1)]",
+                    {
+                      "border-red-500": errors.password,
+                      "border-[rgba(202,212,225,1)]": !errors.password,
+                    }
+                  )}
                   disabled={isLoading}
                 />
 
@@ -308,20 +322,47 @@ export default function AuthPage() {
                   </button>
                 </p>
 
-                <input
-                  type="password"
-                  ref={passwordInputRef}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handlePasswordSubmit()}
-                  placeholder="Enter your password"
-                  className={`w-[404px] rounded-xl border px-3 py-3 font-semibold bg-[rgba(242,242,242,1)] focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:text-base placeholder:leading-5.5 placeholder:-tracking-[0.18px] placeholder:font-normal placeholder:text-[rgba(201,201,201,1)] ${
-                    errors.password
-                      ? "border-red-500"
-                      : "border-[rgba(202,212,225,1)]"
-                  }`}
-                  disabled={isLoading}
-                />
+                <div className="relative w-[404px]">
+                  <input
+                    type={showPassword.password ? "password" : "text"}
+                    ref={passwordInputRef}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onKeyDown={(e) =>
+                      e.key === "Enter" && handlePasswordSubmit()
+                    }
+                    placeholder="Enter your password"
+                    className={cn(
+                      "w-full rounded-xl border px-3 py-3 pr-12 font-semibold bg-[rgba(242,242,242,1)] focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:text-base placeholder:leading-5.5 placeholder:-tracking-[0.18px] placeholder:font-normal placeholder:text-[rgba(201,201,201,1)]",
+                      {
+                        "border-red-500": errors.password,
+                        "border-[rgba(202,212,225,1)]": !errors.password,
+                      }
+                    )}
+                    disabled={isLoading}
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => toggleShow("password")}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 hover:bg-gray-100 rounded-full transition-colors"
+                  >
+                    <Image
+                      src={
+                        showPassword.password
+                          ? "/images/eye-off.svg"
+                          : "/images/eye-open.svg"
+                      }
+                      alt={
+                        showPassword.password
+                          ? "Hide password"
+                          : "Show password"
+                      }
+                      width={20}
+                      height={20}
+                    />
+                  </button>
+                </div>
 
                 {errors.password && (
                   <div className="text-red-500 text-sm text-start w-[404px]">
@@ -348,7 +389,7 @@ export default function AuthPage() {
                 )}
 
                 <p className="text-neutral-500 text-center whitespace-nowrap">
-                  we sent a temporary login code to {email} <br />
+                  We sent a temporary login code to {email} <br />
                   <button
                     onClick={() => setStep("email")}
                      disabled={isLoading}
@@ -369,14 +410,21 @@ export default function AuthPage() {
                   }}
                   onKeyDown={(e) => e.key === "Enter" && handleCodeSubmit()}
                   placeholder="Enter login code"
-                  className={`w-[404px] rounded-xl border bg-[rgba(242,242,242,1)] font-semibold px-3 py-3 focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:text-base placeholder:leading-5.5 placeholder:-tracking-[0.18px] placeholder:text-[rgba(201,201,201,1)] ${
-                    errors.code
-                      ? "border-red-500"
-                      : "border-[rgba(202,212,225,1)]"
-                  }`}
-                   disabled={isLoading}
-
+                  className={cn(
+                    "w-[404px] rounded-xl border bg-[rgba(242,242,242,1)] font-semibold px-3 py-3 focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:text-base placeholder:leading-5.5 placeholder:-tracking-[0.18px] placeholder:text-[rgba(201,201,201,1)]",
+                    {
+                      "border-red-500": errors.password,
+                      "border-[rgba(202,212,225,1)]": !errors.password,
+                    }
+                  )}
+                  disabled={isLoading}
                 />
+                
+                {errors.code && (
+                  <div className="text-red-500 text-sm text-start w-[404px]">
+                    {errors.code}
+                  </div>
+                )}
 
                 <Button
                   onClick={handleCodeSubmit}
@@ -461,13 +509,14 @@ export default function AuthPage() {
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   placeholder="First Name*"
-                  className={`w-[404px] rounded-xl text-base font-semibold border bg-[rgba(242,242,242,1)] px-3 py-3 focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:text-base placeholder:leading-5.5 placeholder:-tracking-[0.18px] placeholder:font-normal placeholder:text-[rgba(201,201,201,1)] ${
-                    errors.firstName
-                      ? "border-red-500"
-                      : "border-[rgba(202,212,225,1)]"
-                  }`}
-                   disabled={isLoading}
-
+                  className={cn(
+                    "w-[404px] rounded-xl text-base font-semibold border bg-[rgba(242,242,242,1)] px-3 py-3 focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:text-base placeholder:leading-5.5 placeholder:-tracking-[0.18px] placeholder:font-normal placeholder:text-[rgba(201,201,201,1)]",
+                    {
+                      "border-red-500": errors.password,
+                      "border-[rgba(202,212,225,1)]": !errors.password,
+                    }
+                  )}
+                  disabled={isLoading}
                 />
 
                 {errors.firstName && (
@@ -481,13 +530,14 @@ export default function AuthPage() {
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   placeholder="Last Name*"
-                  className={`w-[404px] rounded-xl text-base font-semibold border bg-[rgba(242,242,242,1)] px-3 py-3 focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:text-base placeholder:leading-5.5 placeholder:-tracking-[0.18px] placeholder:font-normal placeholder:text-[rgba(201,201,201,1)] ${
-                    errors.lastName
-                      ? "border-red-500"
-                      : "border-[rgba(202,212,225,1)]"
-                  }`}
-                   disabled={isLoading}
-
+                  className={cn(
+                    "w-[404px] rounded-xl text-base font-semibold border bg-[rgba(242,242,242,1)] px-3 py-3 focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:text-base placeholder:leading-5.5 placeholder:-tracking-[0.18px] placeholder:font-normal placeholder:text-[rgba(201,201,201,1)]",
+                    {
+                      "border-red-500": errors.password,
+                      "border-[rgba(202,212,225,1)]": !errors.password,
+                    }
+                  )}
+                  disabled={isLoading}
                 />
 
                 {errors.lastName && (
@@ -496,19 +546,45 @@ export default function AuthPage() {
                   </div>
                 )}
 
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Password*"
-                  className={`w-[404px] rounded-xl text-base font-semibold border bg-[rgba(242,242,242,1)] px-3 py-3 focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:text-base placeholder:leading-5.5 placeholder:-tracking-[0.18px] placeholder:font-normal placeholder:text-[rgba(201,201,201,1)] ${
-                    errors.password
-                      ? "border-red-500"
-                      : "border-[rgba(202,212,225,1)]"
-                  }`}
-                   disabled={isLoading}
+                <div className="relative w-[404px]">
+                  <input
+                    type={showPassword.password ? "password" : "text"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password*"
+                    className={cn(
+                      "w-full rounded-xl text-base font-semibold border bg-[rgba(242,242,242,1)] px-3 py-3 pr-16 focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:text-base placeholder:leading-5.5 placeholder:-tracking-[0.18px] placeholder:font-normal placeholder:text-[rgba(201,201,201,1)]",
+                      {
+                        "border-red-500": errors.password,
+                        "border-[rgba(202,212,225,1)]": !errors.password,
+                      }
+                    )}
+                    disabled={isLoading}
+                  />
 
-                />
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => toggleShow("password")}
+                      className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                    >
+                      <Image
+                        src={
+                          showPassword.password
+                            ? "/images/eye-off.svg"
+                            : "/images/eye-open.svg"
+                        }
+                        alt={
+                          showPassword.password
+                            ? "Hide password"
+                            : "Show password"
+                        }
+                        width={20}
+                        height={20}
+                      />
+                    </button>
+                  </div>
+                </div>
 
                 {errors.password && (
                   <div className="text-red-500 text-xs -mt-2 w-[404px] text-left">
@@ -516,22 +592,48 @@ export default function AuthPage() {
                   </div>
                 )}
 
-                <input
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  onKeyDown={(e) =>
-                    e.key === "Enter" && handleRegistrationSubmit()
-                  }
-                  placeholder="Confirm Password*"
-                  className={`w-[404px] rounded-xl text-base font-semibold border bg-[rgba(242,242,242,1)] px-3 py-3 focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:text-base placeholder:leading-5.5 placeholder:-tracking-[0.18px] placeholder:font-normal placeholder:text-[rgba(201,201,201,1)] ${
-                    errors.confirmPassword
-                      ? "border-red-500"
-                      : "border-[rgba(202,212,225,1)]"
-                  }`}
-                   disabled={isLoading}
+                <div className="relative w-[404px]">
+                  <input
+                    type={showPassword.confirmPassword ? "password" : "text"}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onKeyDown={(e) =>
+                      e.key === "Enter" && handleRegistrationSubmit()
+                    }
+                    placeholder="Confirm Password*"
+                    className={cn(
+                      "w-[404px] rounded-xl text-base font-semibold border bg-[rgba(242,242,242,1)] px-3 py-3 focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:text-base placeholder:leading-5.5 placeholder:-tracking-[0.18px] placeholder:font-normal placeholder:text-[rgba(201,201,201,1)]",
+                      {
+                        "border-red-500": errors.confirmPassword,
+                        "border-[rgba(202,212,225,1)]": !errors.confirmPassword,
+                      }
+                    )}
+                    disabled={isLoading}
+                  />
 
-                />
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => toggleShow("confirmPassword")}
+                      className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                    >
+                      <Image
+                        src={
+                          showPassword.confirmPassword
+                            ? "/images/eye-off.svg"
+                            : "/images/eye-open.svg"
+                        }
+                        alt={
+                          showPassword.confirmPassword
+                            ? "Hide password"
+                            : "Show password"
+                        }
+                        width={20}
+                        height={20}
+                      />
+                    </button>
+                  </div>
+                </div>
 
                 {errors.confirmPassword && (
                   <div className="text-red-500 text-xs -mt-2 w-[404px] text-left">

@@ -404,7 +404,7 @@ export default function AuthPage() {
               <div className="flex flex-col items-center justify-center gap-4 text-sm leading-5 -tracking-[0.02px]">
 
                 <p className="text-neutral-500 text-center whitespace-nowrap">
-                  we sent a temporary login code to {email} <br />
+                  We sent a temporary login code to {email} <br />
                   <button
                     onClick={() => setStep("email")}
                     disabled={loading}

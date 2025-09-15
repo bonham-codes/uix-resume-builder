@@ -6,17 +6,17 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  checkEmailExists,
-  loginUser,
-  registerUser,
+  useCheckEmailExists,
+  useLoginUser,
+  useRegisterUser,
+  useVerifyOtp,
   validateEmail,
   validatePassword,
-  verifyOtp,
-} from "@/entities/auth-page/api/login-details";
+} from "@entities/auth-page/api/auth-queries";
 import { AuthHeader } from "./ui/auth-header";
 import { VideoBackground } from "./ui/video-background";
 import Image from "next/image";
-import GoogleSignInButton from "@/shared/ui/components/google-signin-button";
+import GoogleSignInButton from "@shared/ui/components/google-signin-button";
 
 export default function AuthPage() {
   const router = useRouter();
@@ -33,13 +33,17 @@ export default function AuthPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [socialAccounts, setSocialAccounts] = useState<string[]>([]);
-
-  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const codeInputRef = useRef<HTMLInputElement>(null);
+
+  const checkEmailMutation = useCheckEmailExists();
+  const verifyOtpMutation = useVerifyOtp();
+  const registerMutation = useRegisterUser();
+  const loginMutation = useLoginUser();
+
 
   const clearErrors = () => {
     setErrors({});
@@ -58,38 +62,36 @@ export default function AuthPage() {
       return;
     }
 
-    setLoading(true);
-    try {
-      const emailCheckResult = await checkEmailExists(email);
+    checkEmailMutation.mutate(email, {
+      onSuccess: (emailCheckResult) => {
+        const emailExists = emailCheckResult.emailExists ?? false;
 
-      const emailExists = emailCheckResult.emailExists ?? false;
-
-      if (emailExists) {
-        if (
-          emailCheckResult.hasPassword === false &&
-          emailCheckResult.socialAccounts
-        ) {
-          setSocialAccounts(emailCheckResult.socialAccounts);
-          setStep("socialAccounts");
-        } else {
-          setIsExistingUser(true);
-          setStep("password");
-        }
-      } else {
-        setIsExistingUser(false);
-        setStep("code");
-
-        setTimeout(() => {
-          if (codeInputRef.current) {
-            codeInputRef.current.focus();
+        if (emailExists) {
+          if (
+            emailCheckResult.hasPassword === false &&
+            emailCheckResult.socialAccounts
+          ) {
+            setSocialAccounts(emailCheckResult.socialAccounts);
+            setStep("socialAccounts");
+          } else {
+            setIsExistingUser(true);
+            setStep("password");
           }
-        }, 100);
-      }
-    } catch (error) {
-      setErrors({ email: "Failed to process email. Please try again." });
-    } finally {
-      setLoading(false);
-    }
+        } else {
+          setIsExistingUser(false);
+          setStep("code");
+
+          setTimeout(() => {
+            if (codeInputRef.current) {
+              codeInputRef.current.focus();
+            }
+          }, 100);
+        }
+      },
+      onError: (error) => {
+        setErrors({ email: "Failed to process email. Please try again." });
+      },
+    });
   };
 
   const handlePasswordSubmit = async () => {
@@ -100,20 +102,17 @@ export default function AuthPage() {
       return;
     }
 
-    setLoading(true);
-    try {
-      const loginSuccess = await loginUser(email, password);
-
-      if (loginSuccess) {
-        router.push("/dashboard");
-      } else {
-        setErrors({ password: "Invalid password. Please try again." });
+   loginMutation.mutate(
+      { email, password },
+      {
+        onSuccess: (data) => {
+          router.push("/dashboard");
+        },
+        onError: (error) => {
+          setErrors({ password: "Invalid password. Please try again." });
+        },
       }
-    } catch (error) {
-      setErrors({ password: "Login failed. Please try again." });
-    } finally {
-      setLoading(false);
-    }
+    );
   };
 
   const handleCodeSubmit = async () => {
@@ -129,20 +128,17 @@ export default function AuthPage() {
       return;
     }
 
-    setLoading(true);
-    try {
-      const otpValid = await verifyOtp(email, loginCode);
-
-      if (otpValid) {
-        setStep("register");
-      } else {
-        setErrors({ code: "Invalid or expired OTP. Please try again." });
+    verifyOtpMutation.mutate(
+      { email, otp: loginCode },
+      {
+        onSuccess: () => {
+          setStep("register");
+        },
+        onError: (error) => {
+          setErrors({ code: "Invalid or expired OTP. Please try again." });
+        },
       }
-    } catch (error) {
-      setErrors({ code: "Failed to verify OTP. Please try again." });
-    } finally {
-      setLoading(false);
-    }
+    );
   };
 
   const handleRegistrationSubmit = async () => {
@@ -170,26 +166,23 @@ export default function AuthPage() {
       return;
     }
 
-    setLoading(true);
-    try {
-      const registrationSuccess = await registerUser({
+   registerMutation.mutate(
+      {
         email,
         firstName,
         lastName,
         password,
         confirmPassword,
-      });
-
-      if (registrationSuccess) {
-        router.push("/dashboard");
-      } else {
-        setErrors({ submit: "Registration failed. Please try again." });
+      },
+      {
+        onSuccess: (data) => {
+          router.push("/dashboard");
+        },
+        onError: (error) => {
+          setErrors({ submit: "Registration failed. Please try again." });
+        },
       }
-    } catch (error) {
-      setErrors({ submit: "Registration failed. Please try again." });
-    } finally {
-      setLoading(false);
-    }
+    );
   };
 
   useEffect(() => {
@@ -203,6 +196,13 @@ export default function AuthPage() {
       passwordInputRef.current.focus();
     }
   }, [step]);
+
+   const isLoading = 
+    checkEmailMutation.isPending ||
+    verifyOtpMutation.isPending ||
+    registerMutation.isPending ||
+    loginMutation.isPending;
+
 
   return (
     <div className="flex items-center justify-center gap-3">
@@ -265,7 +265,8 @@ export default function AuthPage() {
               <div className="text-center">
                 <Button
                   onClick={() => setStep("email")}
-                  disabled={loading}
+                  disabled={isLoading}
+
                   className="py-8 px-[139.5px] text-[rgba(149,157,168,1)] text-base font-semibold rounded-xl border-2 border-white shadow-[0_1px_2px_0_rgba(0,0,0,0.04)] transition-all duration-300 cursor-pointer bg-[linear-gradient(273deg,rgb(226,238,255)_3.19%,rgb(241,247,255)_84.37%)] hover:bg-[linear-gradient(273deg,rgb(102,141,193)_3.19%,rgb(66,72,80)_84.37%)] hover:scale-105 hover:text-white"
                 >
                   See other Option
@@ -287,7 +288,7 @@ export default function AuthPage() {
                       ? "border-red-500"
                       : "border-[rgba(202,212,225,1)]"
                   }`}
-                  disabled={loading}
+                  disabled={isLoading}
                 />
 
                 {errors.email && (
@@ -298,7 +299,7 @@ export default function AuthPage() {
 
                 <Button
                   onClick={handleEmailSubmit}
-                  loading={loading}
+                  loading={isLoading}
                   className="w-[404px] text-white text-center py-6 px-3 border-2 border-white font-semibold rounded-xl text-base leading-5.5 -tracking-[0.18px] bg-black hover:[background:radial-gradient(84.7%_171.87%_at_50%_144.79%,rgb(77,153,255)_0%,rgb(23,23,23)_100%)] transition-all duration-300"
                 >
                   Continue
@@ -312,7 +313,7 @@ export default function AuthPage() {
                   Welcome back! Please enter your password for {email}
                   <button
                     onClick={() => setStep("email")}
-                    disabled={loading}
+                    disabled={isLoading}
                     className="font-semibold hover:underline ml-1 text-blue-600"
                   >
                     Not you?
@@ -331,7 +332,7 @@ export default function AuthPage() {
                       ? "border-red-500"
                       : "border-[rgba(202,212,225,1)]"
                   }`}
-                  disabled={loading}
+                  disabled={isLoading}
                 />
 
                 {errors.password && (
@@ -342,7 +343,7 @@ export default function AuthPage() {
 
                 <Button
                   onClick={handlePasswordSubmit}
-                  loading={loading}
+                  loading={isLoading}
                   className="w-[404px] text-white text-center py-6 px-3 border-2 border-white font-semibold rounded-xl text-base leading-5.5 -tracking-[0.18px] bg-black hover:[background:radial-gradient(84.7%_171.87%_at_50%_144.79%,rgb(77,153,255)_0%,rgb(23,23,23)_100%)] transition-all duration-300"
                 >
                   Login
@@ -362,7 +363,8 @@ export default function AuthPage() {
                   we sent a temporary login code to {email} <br />
                   <button
                     onClick={() => setStep("email")}
-                    disabled={loading}
+                     disabled={isLoading}
+
                     className="font-semibold hover:underline ml-1"
                   >
                     Not you?
@@ -384,12 +386,13 @@ export default function AuthPage() {
                       ? "border-red-500"
                       : "border-[rgba(202,212,225,1)]"
                   }`}
-                  disabled={loading}
+                   disabled={isLoading}
+
                 />
 
                 <Button
                   onClick={handleCodeSubmit}
-                  loading={loading}
+                  loading={isLoading}
                   className="w-[404px] text-white text-center border-2 border-white py-6 px-3 font-semibold rounded-xl text-base leading-5.5 -tracking-[0.18px] bg-black hover:[background:radial-gradient(84.7%_171.87%_at_50%_144.79%,rgb(77,153,255)_0%,rgb(23,23,23)_100%)] transition-all duration-300"
                 >
                   Continue
@@ -475,7 +478,8 @@ export default function AuthPage() {
                       ? "border-red-500"
                       : "border-[rgba(202,212,225,1)]"
                   }`}
-                  disabled={loading}
+                   disabled={isLoading}
+
                 />
 
                 {errors.firstName && (
@@ -494,7 +498,8 @@ export default function AuthPage() {
                       ? "border-red-500"
                       : "border-[rgba(202,212,225,1)]"
                   }`}
-                  disabled={loading}
+                   disabled={isLoading}
+
                 />
 
                 {errors.lastName && (
@@ -513,7 +518,8 @@ export default function AuthPage() {
                       ? "border-red-500"
                       : "border-[rgba(202,212,225,1)]"
                   }`}
-                  disabled={loading}
+                   disabled={isLoading}
+
                 />
 
                 {errors.password && (
@@ -535,7 +541,8 @@ export default function AuthPage() {
                       ? "border-red-500"
                       : "border-[rgba(202,212,225,1)]"
                   }`}
-                  disabled={loading}
+                   disabled={isLoading}
+
                 />
 
                 {errors.confirmPassword && (
@@ -546,7 +553,7 @@ export default function AuthPage() {
 
                 <Button
                   onClick={handleRegistrationSubmit}
-                  loading={loading}
+                  loading={isLoading}
                   className="w-[404px] border-2 border-white text-white text-center py-6 px-3 font-semibold rounded-xl text-base leading-5.5 -tracking-[0.18px] bg-black hover:[background:radial-gradient(84.7%_171.87%_at_50%_144.79%,rgb(77,153,255)_0%,rgb(23,23,23)_100%)] placeholder:font-normal transition-all duration-300"
                 >
                   Continue

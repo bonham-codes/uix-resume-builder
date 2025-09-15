@@ -1,12 +1,11 @@
-import * as React from "react";
-import { type VariantProps } from "class-variance-authority";
-import { buttonVariants, ShadcnButton } from "../shadcn-button";
-import { cn } from "@/shared/lib/utils";
-import LoadingIcon from "./icons/loading-icon";
+import LoadingIcon from '@shared/icons/loading-icon';
 
-interface ButtonProps
-  extends React.ComponentProps<"button">,
-    VariantProps<typeof buttonVariants> {
+import { type VariantProps } from 'class-variance-authority';
+import * as React from 'react';
+import { cn } from '@/shared/lib/utils';
+import { type buttonVariants, ShadcnButton } from '../shadcn-button';
+
+interface ButtonProps extends React.ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   loading?: boolean;
   leftIcon?: React.ReactNode;
@@ -16,8 +15,8 @@ interface ButtonProps
 
 const Button = ({
   children,
-  variant = "default",
-  size = "default",
+  variant = 'default',
+  size = 'default',
   loading = false,
   leftIcon,
   rightIcon,
@@ -35,11 +34,7 @@ const Button = ({
       size={size}
       disabled={isDisabled}
       asChild={asChild}
-      className={cn(
-        fullWidth && "w-full",
-        loading && "cursor-not-allowed",
-        className
-      )}
+      className={cn(fullWidth && 'w-full', loading && 'cursor-not-allowed', className)}
       {...props}
     >
       {loading && <LoadingIcon />}

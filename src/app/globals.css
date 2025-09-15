@@ -448,6 +448,53 @@
     inset 0 -8px 10 rgba(255, 255, 255, 0.7);
 }
 
+.video-container {
+  --h: 95vh;
+  --s: 90px;
+  --r: 36px;
+  
+  height: var(--h);
+  background: linear-gradient(60deg,rgb(192, 41, 66),rgb(84, 36, 55));
+  border-radius: var(--r) 0 0 var(--r);
+  --_a: atan2(var(--s),var(--h));
+  clip-path: 
+   shape(from 0 0,
+    line  to calc(100% - var(--s) - var(--r)) 0,
+    curve by calc(var(--r)*(1 + sin(var(--_a)))) 
+             calc(var(--r)*cos(var(--_a)))
+    with var(--r) 0,
+    line  to calc(100% - var(--r)*sin(var(--_a))) 
+             calc(100% - var(--r)*cos(var(--_a))),
+    curve to calc(100% - var(--r)) 100% 
+    with 100% 100%,
+    line to 0 100%
+   );
+
+    transform: rotate3d(0, 1, 0, 180deg) rotate(180deg); 
+}
+
+.video-container > video {
+  transform: rotate3d(1, 0, 0, 180deg);
+}
+
+.video-overlay-text{
+  transform: rotate3d(1, 0, 0, 180deg);
+}
+
+.highlighted-gradient-text {
+  background: linear-gradient(63deg, rgb(251, 177, 131) 28.04%, rgb(164, 91, 47) 113.47%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtle-gradient-text{
+  background: linear-gradient(93deg, rgb(226, 226, 226) 2.09%, rgba(169, 172, 173, 0.73) 78.4%, rgba(15, 27, 28, 0.00) 182.62%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .glass-card2 {
   border-top: 1px solid rgba(255, 255, 255, 0.9);
   border-bottom: 1px solid rgba(255, 255, 255, 0.9);

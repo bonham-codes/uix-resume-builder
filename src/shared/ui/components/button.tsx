@@ -1,11 +1,12 @@
-import { cn } from '@shared/lib/cn';
+import * as React from "react";
+import { type VariantProps } from "class-variance-authority";
+import { buttonVariants, ShadcnButton } from "../shadcn-button";
+import { cn } from "@/shared/lib/utils";
+import LoadingIcon from "./icons/loading-icon";
 
-import LoadingIcon from './icons/loading-icon';
-import { type VariantProps } from 'class-variance-authority';
-import * as React from 'react';
-import { buttonVariants, ShadcnButton } from '../shadcn-button';
-
-interface ButtonProps extends React.ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
+interface ButtonProps
+  extends React.ComponentProps<"button">,
+    VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   loading?: boolean;
   leftIcon?: React.ReactNode;

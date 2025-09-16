@@ -45,7 +45,13 @@ export interface LinkNode extends TemplateNode {
   href: string;
 }
 
-export type Nodes = ContainerNode | TextNode | SeperatorNode | ListNode | LinkNode;
+export interface HtmlNode extends TemplateNode {
+  type: 'html';
+  pathWithFallback: DataBindingPath;
+  className?: string;
+}
+
+export type Nodes = ContainerNode | TextNode | SeperatorNode | ListNode | LinkNode | HtmlNode;
 
 export type ResumeDataValue = string | number;
 

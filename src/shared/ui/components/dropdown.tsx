@@ -15,7 +15,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '../shadcn-dropdown';
+} from '../dropdown';
 
 interface DropdownProps {
   trigger: React.ReactNode;
@@ -34,16 +34,16 @@ const Dropdown = ({ trigger, children, className }: DropdownProps) => {
 
 export {
   Dropdown,
+  DropdownMenuCheckboxItem,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuCheckboxItem,
+  DropdownMenuPortal,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-  DropdownMenuGroup,
-  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuSub,
-  DropdownMenuSubTrigger,
   DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
 };

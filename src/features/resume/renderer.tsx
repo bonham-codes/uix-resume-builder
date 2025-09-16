@@ -1,26 +1,27 @@
-import { cn } from '@shared/lib/cn';
-
-import type { ContainerNode, LinkNode, ListNode, Nodes, ResumeData, SeperatorNode, TextNode } from './types';
+import type { ContainerNode, HtmlNode, LinkNode, ListNode, Nodes, ResumeData, SeperatorNode, TextNode } from './types';
 import { resolvePath } from './utils';
+import { cn } from '@shared/lib/cn';
 import React from 'react';
 
 type RenderProps = {
   template: any;
   data: ResumeData;
+  className?: string;
 };
 
-export function ResumeRenderer({ template, data }: RenderProps) {
+export function ResumeRenderer({ template, data, className }: RenderProps) {
   const { page, body } = template;
 
   return (
     <div
-      className={cn(page.className)}
+      className={cn(page.className, className)}
       style={{
-        width: page.width ?? 794, // ~ A4 at 96dpi
-        height: page.height,
+        // width: page.width ?? 794, // ~ A4 at 96dpi
+        // height: page.height,
         padding: page.padding ?? 24,
         background: page.background ?? 'white',
         fontFamily: page.fontFamily,
+        position: 'relative',
       }}
     >
       {renderNode(body, data)}
@@ -40,6 +41,8 @@ function renderNode(node: Nodes, data: ResumeData): React.ReactNode {
       return renderSeperator(node as SeperatorNode);
     case 'link':
       return renderLink(node as LinkNode, data);
+    case 'html':
+      return renderHtml(node as HtmlNode, data);
     default:
       return null;
   }
@@ -50,8 +53,8 @@ function renderContainer(node: ContainerNode, data: ResumeData) {
 
   return (
     <div className={cn(`flex`, className)}>
-      {children.map((child) => (
-        <React.Fragment key={child.id}>{renderNode(child, data)}</React.Fragment>
+      {children.map((child, index) => (
+        <React.Fragment>{renderNode(child, data)}</React.Fragment>
       ))}
     </div>
   );
@@ -89,7 +92,7 @@ function renderList(node: ListNode, data: ResumeData) {
   }
 
   if (transform?.variant === 'flatten') {
-    const flattened = resolved.flatMap((item) => item[transform.key]);
+    const flattened = resolved.flatMap((item) => item[transform.key as keyof typeof item]);
 
     return (
       <div className={cn('flex flex-wrap', node.className)}>
@@ -107,6 +110,13 @@ function renderList(node: ListNode, data: ResumeData) {
       )}
     </div>
   );
+}
+
+function renderHtml(node: HtmlNode, data: ResumeData) {
+  const { pathWithFallback, className } = node;
+  const resolved = resolvePath({ data, ...pathWithFallback });
+
+  return <div className={cn(className)} dangerouslySetInnerHTML={{ __html: resolved as string }} />;
 }
 
 function renderLink(node: LinkNode, data: ResumeData) {

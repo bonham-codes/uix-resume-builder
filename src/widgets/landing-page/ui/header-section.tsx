@@ -1,8 +1,8 @@
-import Image from 'next/image';
-import React from 'react';
-import { Button } from '@/shared/ui/components/button';
+import React from "react";
+import { Button } from "@/shared/ui/components/button";
+import Image from "next/image";
 
-export function Header() {
+function Header() {
   return (
     <header className="w-full flex items-center justify-between px-12 py-4">
       <div className="flex items-center gap-4">
@@ -15,8 +15,14 @@ export function Header() {
 
         <div className="flex items-center gap-1 px-2 py-1 bg-[rgb(2,164,79)] text-white rounded-full text-xs font-bold">
           <span>AI Powered</span>
-
-          <Image src="/images/auto_awesome.svg" alt="AI" width={14} height={14} className="inline-block" />
+          
+          <Image
+            src="/images/auto_awesome.svg"
+            alt="AI"
+            width={14}
+            height={14}
+            className="inline-block"
+          />
         </div>
       </div>
 
@@ -40,3 +46,5 @@ export function Header() {
     </header>
   );
 }
+
+export default Header;

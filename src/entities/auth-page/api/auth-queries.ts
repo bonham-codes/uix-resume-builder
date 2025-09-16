@@ -25,9 +25,9 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const checkEmailExistsAPI = async (email: string): Promise<EmailCheckResponse> => {
   const response = await fetch(`${BACKEND_URL}/auth/check-email`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email }),
   });
@@ -41,9 +41,9 @@ const checkEmailExistsAPI = async (email: string): Promise<EmailCheckResponse> =
 
 const verifyOtpAPI = async ({ email, otp }: { email: string; otp: string }): Promise<boolean> => {
   const response = await fetch(`${BACKEND_URL}/auth/verify-otp`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, otp }),
   });
@@ -53,14 +53,14 @@ const verifyOtpAPI = async ({ email, otp }: { email: string; otp: string }): Pro
   }
 
   const data = await response.json();
-  return data.success || true; 
+  return data.success || true;
 };
 
 const registerUserAPI = async (userData: RegisterUserData): Promise<AuthResponse> => {
   const response = await fetch(`${BACKEND_URL}/auth/register`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(userData),
   });
@@ -74,9 +74,9 @@ const registerUserAPI = async (userData: RegisterUserData): Promise<AuthResponse
 
 const loginUserAPI = async ({ email, password }: { email: string; password: string }): Promise<AuthResponse> => {
   const response = await fetch(`${BACKEND_URL}/auth/email-signin`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
   });
@@ -114,16 +114,16 @@ export const useVerifyOtp = () => {
 
 export const useRegisterUser = () => {
   const queryClient = useQueryClient();
-  const setUser= useUserStore((state)=> state.setUser)
-  
+  const setUser = useUserStore((state) => state.setUser);
+
   return useMutation({
     mutationFn: registerUserAPI,
     onSuccess: (data) => {
       console.log('User registered successfully:', data);
       if (data.token) {
-        localStorage.setItem("authToken", data.token);
+        localStorage.setItem('authToken', data.token);
       }
-      setUser({...data.user, token:data.token});
+      setUser({ ...data.user, token: data.token });
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
     onError: (error) => {
@@ -135,15 +135,15 @@ export const useRegisterUser = () => {
 export const useLoginUser = () => {
   const queryClient = useQueryClient();
   const setUser = useUserStore((state) => state.setUser);
-  
+
   return useMutation({
     mutationFn: loginUserAPI,
     onSuccess: (data) => {
       console.log('User logged in successfully:', data);
       if (data.token) {
-        localStorage.setItem("authToken", data.token);
+        localStorage.setItem('authToken', data.token);
       }
-      setUser({...data.user, token:data.token});
+      setUser({ ...data.user, token: data.token });
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
     onError: (error) => {
@@ -159,9 +159,5 @@ export const validateEmail = (email: string) => {
 
 export const validatePassword = (password: string) => {
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
-  return (
-    password.length >= 6 &&
-    password.length <= 32 &&
-    passwordRegex.test(password)
-  );
+  return password.length >= 6 && password.length <= 32 && passwordRegex.test(password);
 };

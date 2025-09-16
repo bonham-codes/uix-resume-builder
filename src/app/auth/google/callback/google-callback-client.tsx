@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { sendAuthCodeToBackend } from "@/shared/lib/google-auth";
+import { useEffect, useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { sendAuthCodeToBackend } from '@/shared/lib/google-auth';
 
 export default function GoogleCallbackClient() {
   const searchParams = useSearchParams();
@@ -13,8 +13,8 @@ export default function GoogleCallbackClient() {
 
   useEffect(() => {
     const handleCallback = async () => {
-      const code = searchParams?.get("code");
-      const error = searchParams?.get("error");
+      const code = searchParams?.get('code');
+      const error = searchParams?.get('error');
 
       if (error) {
         setError(`Google authentication failed: ${error}`);
@@ -23,34 +23,30 @@ export default function GoogleCallbackClient() {
       }
 
       if (!code) {
-        setError("No authorization code received from Google");
+        setError('No authorization code received from Google');
         setLoading(false);
         return;
       }
 
       try {
-        setSuccess("Authenticating with backend...");
+        setSuccess('Authenticating with backend...');
 
         const authResponse = await sendAuthCodeToBackend(code);
 
-        if (authResponse.status === "success") {
-          setSuccess("Authentication successful! Redirecting...");
+        if (authResponse.status === 'success') {
+          setSuccess('Authentication successful! Redirecting...');
 
-          localStorage.setItem("user", JSON.stringify(authResponse));
+          localStorage.setItem('user', JSON.stringify(authResponse));
 
           setTimeout(() => {
-            router.push("/dashboard");
+            router.push('/dashboard');
           }, 1000);
         } else {
-          setError(authResponse.message || "Authentication failed");
+          setError(authResponse.message || 'Authentication failed');
           setLoading(false);
         }
       } catch (err) {
-        setError(
-          err instanceof Error
-            ? err.message
-            : "Failed to authenticate with backend"
-        );
+        setError(err instanceof Error ? err.message : 'Failed to authenticate with backend');
         setLoading(false);
       }
     };
@@ -88,7 +84,8 @@ export default function GoogleCallbackClient() {
           <p className="mb-4">{error}</p>
 
           <button
-            onClick={() => router.push("/")}
+            type="button"
+            onClick={() => router.push('/')}
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
             Go Back to Home

@@ -14,7 +14,7 @@ export default function FormPage() {
   const navs = useMemo(
     () =>
       Object.keys(schema ?? {}).map((key) => ({
-        label: schema?.[key]?.label,
+        label: schema?.[key]?.label ?? '',
         name: key,
       })) ?? [],
     [schema, resumeData],

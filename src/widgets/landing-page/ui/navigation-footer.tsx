@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React from "react";
-import { ArrowRight } from "lucide-react";
+import React from 'react';
+import { ArrowRight } from 'lucide-react';
 
 interface NavigationLink {
   label: string;
@@ -10,17 +10,17 @@ interface NavigationLink {
 
 const FooterNavigation = () => {
   const leftColumnLinks: NavigationLink[] = [
-    { label: "About Us", href: "/about" },
-    { label: "Help", href: "/help" },
-    { label: "What's New", href: "/whats-new" },
-    { label: "Check Templates", href: "/templates" },
+    { label: 'About Us', href: '/about' },
+    { label: 'Help', href: '/help' },
+    { label: "What's New", href: '/whats-new' },
+    { label: 'Check Templates', href: '/templates' },
   ];
 
   const rightColumnLinks: NavigationLink[] = [
-    { label: "Price", href: "/pricing" },
-    { label: "Reviews", href: "/reviews" },
-    { label: "Career", href: "/career" },
-    { label: "Terms of Service", href: "/terms" },
+    { label: 'Price', href: '/pricing' },
+    { label: 'Reviews', href: '/reviews' },
+    { label: 'Career', href: '/career' },
+    { label: 'Terms of Service', href: '/terms' },
   ];
 
   const NavigationLinkItem = ({ label, href }: NavigationLink) => (
@@ -41,21 +41,13 @@ const FooterNavigation = () => {
     <nav className="flex flex-row items-start gap-14">
       <div className="flex flex-col justify-center gap-4">
         {leftColumnLinks.map((link) => (
-          <NavigationLinkItem
-            key={link.label}
-            label={link.label}
-            href={link.href}
-          />
+          <NavigationLinkItem key={link.label} label={link.label} href={link.href} />
         ))}
       </div>
 
       <div className="flex flex-col justify-center gap-4">
         {rightColumnLinks.map((link) => (
-          <NavigationLinkItem
-            key={link.label}
-            label={link.label}
-            href={link.href}
-          />
+          <NavigationLinkItem key={link.label} label={link.label} href={link.href} />
         ))}
       </div>
     </nav>

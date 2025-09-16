@@ -1,12 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import { motion } from "framer-motion";
-import Link from "next/link";
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 
-interface AuthHeaderProps {}
-
-export function AuthHeader({}: AuthHeaderProps) {
+export function AuthHeader() {
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
@@ -17,9 +14,7 @@ export function AuthHeader({}: AuthHeaderProps) {
       <div className="flex items-center gap-2">
         <h1 className="text-xl font-bold text-slate-800">Resume Builder</h1>
 
-        <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full font-medium">
-          AI Powered ✨
-        </span>
+        <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full font-medium">AI Powered ✨</span>
       </div>
 
       <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600">
@@ -30,7 +25,7 @@ export function AuthHeader({}: AuthHeaderProps) {
         <Link href="/explore" className="hover:text-slate-800 transition-colors">
           Explore
         </Link>
-        
+
         <Link href="/faqs" className="hover:text-slate-800 transition-colors">
           FAQs
         </Link>

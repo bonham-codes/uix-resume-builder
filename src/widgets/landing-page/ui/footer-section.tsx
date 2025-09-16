@@ -1,42 +1,33 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { Button } from "@/shared/ui/components/button";
-import Image from "next/image";
-import FooterNavigation from "./navigation-footer";
-import { useRef } from "react";
+import { motion } from 'framer-motion';
+import { Button } from '@/shared/ui/components/button';
+import Image from 'next/image';
+import FooterNavigation from './navigation-footer';
+import { useRef } from 'react';
 
 const FooterSection = () => {
   const overlays = [
     {
-      id: "colors",
+      id: 'colors',
       content: (
         <div className="glass-card overlay-item bg-white/20 rounded-2xl">
-          <img
-            src="images/color-palete.svg"
-            alt="Hired at Meta"
-            className="w-full h-auto"
-          />
+          <img src="images/color-palete.svg" alt="Hired at Meta" className="w-full h-auto" />
         </div>
       ),
-      position: { top: "-1%", left: "2%" },
+      position: { top: '-1%', left: '2%' },
       width: 250,
       initial: { rotate: -25, x: 400, y: -200, opacity: 0 },
     },
     {
-      id: "google",
+      id: 'google',
       content: (
         <div className="flex items-center bg-white/30 backdrop-blur-sm rounded-full p-2 shadow-[0px_10px_10px_rgba(0,0,0,0.1)] glass-card">
           <div className="bg-white rounded-full p-2">
             <div className="flex items-center gap-[9px]">
               <div className="w-9 h-9 rounded-full flex items-center justify-center bg-[rgba(255,241,200,1)]">
                 <div className="relative w-[26px] h-[26px]">
-                  <Image
-                    src="images/google-logo.svg"
-                    alt="google"
-                    fill
-                    className="object-contain"
-                  />
+                  <Image src="images/google-logo.svg" alt="google" fill className="object-contain" />
                 </div>
               </div>
               <span className="text-gray-700 font-medium">Google</span>
@@ -44,24 +35,19 @@ const FooterSection = () => {
           </div>
         </div>
       ),
-      position: { top: "8%", left: "32%" },
+      position: { top: '8%', left: '32%' },
       width: 140,
       initial: { rotate: 15, x: 200, y: -150, opacity: 0 },
     },
     {
-      id: "microsoft",
+      id: 'microsoft',
       content: (
         <div className="flex items-center bg-white/30 backdrop-blur-sm rounded-full p-2 shadow-[0px_10px_10px_rgba(0,0,0,0.1)] glass-card">
           <div className="bg-white rounded-full p-2">
             <div className="flex items-center gap-[9px]">
               <div className="w-9 h-9 rounded-full flex items-center justify-center bg-[rgba(197,255,156,1)]">
                 <div className="relative w-[26px] h-[26px]">
-                  <Image
-                    src="images/microsoft-logo.svg"
-                    alt="microsoft"
-                    fill
-                    className="object-contain"
-                  />
+                  <Image src="images/microsoft-logo.svg" alt="microsoft" fill className="object-contain" />
                 </div>
               </div>
               <span className="text-gray-700 font-medium">Microsoft</span>
@@ -69,24 +55,19 @@ const FooterSection = () => {
           </div>
         </div>
       ),
-      position: { top: "1%", right: "35%" },
+      position: { top: '1%', right: '35%' },
       width: 150,
       initial: { rotate: -24, x: 300, y: -100, opacity: 0 },
     },
     {
-      id: "apple",
+      id: 'apple',
       content: (
         <div className="flex items-center bg-white/30 backdrop-blur-sm rounded-full p-2 shadow-[0px_10px_10px_rgba(0,0,0,0.1)] glass-card">
           <div className="bg-white rounded-full p-2">
             <div className="flex items-center gap-[9px]">
               <div className="w-9 h-9 rounded-full flex items-center justify-center bg-black">
                 <div className="relative w-[26px] h-[26px]">
-                  <Image
-                    src="images/apple-logo.svg"
-                    alt="apple"
-                    fill
-                    className="object-contain"
-                  />
+                  <Image src="images/apple-logo.svg" alt="apple" fill className="object-contain" />
                 </div>
               </div>
               <span className="text-gray-700 font-medium">Apple</span>
@@ -94,24 +75,19 @@ const FooterSection = () => {
           </div>
         </div>
       ),
-      position: { top: "25%", right: "45%" },
+      position: { top: '25%', right: '45%' },
       width: 120,
       initial: { rotate: 13, x: 250, y: 100, opacity: 0 },
     },
     {
-      id: "meta",
+      id: 'meta',
       content: (
         <div className="absolute flex items-center bg-white/30 backdrop-blur-sm rounded-full p-2 shadow-[0px_10px_10px_rgba(0,0,0,0.1)] glass-card ">
           <div className="bg-white rounded-full p-2">
             <div className="flex items-center gap-[9px]">
               <div className="w-9 h-9 rounded-full flex items-center justify-center bg-[rgba(214,235,255,1)]">
                 <div className="relative w-[26px] h-[26px]">
-                  <Image
-                    src="images/meta-logo.svg"
-                    alt="meta"
-                    fill
-                    className="object-contain"
-                  />
+                  <Image src="images/meta-logo.svg" alt="meta" fill className="object-contain" />
                 </div>
               </div>
               <span className="text-gray-700 font-medium">Meta</span>
@@ -119,24 +95,19 @@ const FooterSection = () => {
           </div>
         </div>
       ),
-      position: { top: "48%", left: "5%" },
+      position: { top: '48%', left: '5%' },
       width: 110,
       initial: { rotate: -10, x: -200, y: 200, opacity: 0 },
     },
     {
-      id: "amazon",
+      id: 'amazon',
       content: (
         <div className="absolute flex items-center bg-white/30 backdrop-blur-sm rounded-full p-2 shadow-[0px_10px_10px_rgba(0,0,0,0.1)] glass-card">
           <div className="bg-white rounded-full p-2">
             <div className="flex items-center gap-[9px]">
               <div className="w-9 h-9 rounded-full flex items-center justify-center bg-[rgba(255,241,200,1)]">
                 <div className="relative w-[26px] h-[26px]">
-                  <Image
-                    src="images/amazon-logo.svg"
-                    alt="amazon"
-                    fill
-                    className="object-contain"
-                  />
+                  <Image src="images/amazon-logo.svg" alt="amazon" fill className="object-contain" />
                 </div>
               </div>
               <span className="text-gray-700 font-medium">Amazon</span>
@@ -144,24 +115,19 @@ const FooterSection = () => {
           </div>
         </div>
       ),
-      position: { top: "42%", right: "5%" },
+      position: { top: '42%', right: '5%' },
       width: 130,
       initial: { rotate: 10, x: 300, y: 50, opacity: 0 },
     },
     {
-      id: "nvidia",
+      id: 'nvidia',
       content: (
         <div className="flex items-center bg-white/30 backdrop-blur-sm rounded-full p-2 shadow-[0px_10px_10px_rgba(0,0,0,0.1)] glass-card">
           <div className="bg-white rounded-full p-2">
             <div className="flex items-center gap-[9px]">
               <div className="w-9 h-9 rounded-full flex items-center justify-center bg-[rgba(197,255,156,1)]">
                 <div className="relative w-[26px] h-[26px]">
-                  <Image
-                    src="images/nvidia-logo.svg"
-                    alt="nvidia"
-                    fill
-                    className="object-contain"
-                  />
+                  <Image src="images/nvidia-logo.svg" alt="nvidia" fill className="object-contain" />
                 </div>
               </div>
               <span className="text-gray-700 font-medium">Nvidia</span>
@@ -169,7 +135,7 @@ const FooterSection = () => {
           </div>
         </div>
       ),
-      position: { top: "62%", right: "8%" },
+      position: { top: '62%', right: '8%' },
       width: 125,
       initial: { rotate: -10, x: 350, y: 150, opacity: 0 },
     },
@@ -187,7 +153,6 @@ const FooterSection = () => {
             <h1 className="text-[80px] md:text-7xl font-semibold text-foreground mb-4 leading-tight">
               Right <span className="text-blue-800 font-black">Resume</span>
               <br />
-            
               <span className="block -mt-8 mx-auto w-fit px-[49px] rounded-full text-[rgba(0,137,65,1)] font-black backdrop-blur-xs bg-[rgba(0,242,85,0.2)] border border-white shadow-lg">
                 Right Opportunity
               </span>
@@ -206,18 +171,11 @@ const FooterSection = () => {
 
           <div className="flex flex-row justify-between items-end">
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-semibold text-[rgb(11,10,9)]">
-                Resume Builder
-              </h2>
+              <h2 className="text-lg font-semibold text-[rgb(11,10,9)]">Resume Builder</h2>
 
               <div className="flex items-center gap-1 bg-[rgb(2,164,79)] text-white text-xs font-bold px-3 py-1 rounded-full">
                 <span>AI Powered</span>
-                <Image
-                  src="/images/auto_awesome.svg"
-                  alt="AI Powered"
-                  width={17}
-                  height={17}
-                />
+                <Image src="/images/auto_awesome.svg" alt="AI Powered" width={17} height={17} />
               </div>
             </div>
 
@@ -237,13 +195,13 @@ const FooterSection = () => {
               top: overlay.position.top,
               left: overlay.position.left,
               right: overlay.position.right,
-              width: overlay.width ? `${overlay.width}px` : "auto",
+              width: overlay.width ? `${overlay.width}px` : 'auto',
             }}
             initial={overlay.initial}
             animate={{ x: 0, y: 0, opacity: 1 }}
             transition={{
               duration: 1.2,
-              ease: "easeOut",
+              ease: 'easeOut',
               delay: i * 0.1,
             }}
             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}

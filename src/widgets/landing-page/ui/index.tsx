@@ -30,12 +30,12 @@ export function LandingPage() {
       <div className="h-[1065px]">
         <AITailorSection />
       </div>
-      
-     <div
+
+      <div
         className="border border-white rounded-md mx-4 overflow-hidden"
         style={{
-          background: "radial-gradient(circle, #ccc 1px, transparent 1px)",
-          backgroundSize: "20px 20px",
+          background: 'radial-gradient(circle, #ccc 1px, transparent 1px)',
+          backgroundSize: '20px 20px',
         }}
       >
         <FooterSection />

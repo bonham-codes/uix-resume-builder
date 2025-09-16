@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { sendAuthCodeToBackend } from "@/shared/lib/linkedin-auth";
+import { useEffect, useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { sendAuthCodeToBackend } from '@/shared/lib/linkedin-auth';
 
 export default function LinkedInCallbackClient() {
   const searchParams = useSearchParams();
@@ -13,13 +13,13 @@ export default function LinkedInCallbackClient() {
 
   useEffect(() => {
     const handleCallback = async () => {
-      const code = searchParams?.get("code");
-      const error = searchParams?.get("error");
-      const receivedState = searchParams?.get("state");
-      const expectedState = localStorage.getItem("linkedin_oauth_state");
+      const code = searchParams?.get('code');
+      const error = searchParams?.get('error');
+      const receivedState = searchParams?.get('state');
+      const expectedState = localStorage.getItem('linkedin_oauth_state');
 
       if (receivedState !== expectedState) {
-        setError("State mismatch. Possible CSRF attack.");
+        setError('State mismatch. Possible CSRF attack.');
         setLoading(false);
         return;
       }
@@ -31,35 +31,31 @@ export default function LinkedInCallbackClient() {
       }
 
       if (!code) {
-        setError("No authorization code received from LinkedIn");
+        setError('No authorization code received from LinkedIn');
         setLoading(false);
         return;
       }
 
       try {
-        setSuccess("Authenticating with backend...");
-        console.log("code", code);
+        setSuccess('Authenticating with backend...');
+        console.log('code', code);
 
         const authResponse = await sendAuthCodeToBackend(code);
 
-        if (authResponse.status === "success") {
-          setSuccess("Authentication successful! Redirecting...");
+        if (authResponse.status === 'success') {
+          setSuccess('Authentication successful! Redirecting...');
 
-          localStorage.setItem("user", JSON.stringify(authResponse));
+          localStorage.setItem('user', JSON.stringify(authResponse));
 
           setTimeout(() => {
-            router.push("/dashboard");
+            router.push('/dashboard');
           }, 1000);
         } else {
-          setError(authResponse.message || "Authentication failed");
+          setError(authResponse.message || 'Authentication failed');
           setLoading(false);
         }
       } catch (err) {
-        setError(
-          err instanceof Error
-            ? err.message
-            : "Failed to authenticate with backend"
-        );
+        setError(err instanceof Error ? err.message : 'Failed to authenticate with backend');
         setLoading(false);
       }
     };
@@ -96,7 +92,8 @@ export default function LinkedInCallbackClient() {
           <h2 className="text-xl font-semibold mb-2">Authentication Error</h2>
           <p className="mb-4">{error}</p>
           <button
-            onClick={() => router.push("/")}
+            type="button"
+            onClick={() => router.push('/')}
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
             Go Back to Home

@@ -1,10 +1,9 @@
 import { AITailorSection } from './ai-tailored-section';
 import FooterSection from './footer-section';
-import { Header } from './header-section';
-import { HeroSection } from './hero-section';
+import Header from './header-section';
+import HeroSection from './hero-section';
 import { TemplateCarousel } from './template-carousel';
 import Testimonials from './testimonials-section';
-import Image from 'next/image';
 import React from 'react';
 
 export function LandingPage() {

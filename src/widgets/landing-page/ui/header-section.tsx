@@ -1,14 +1,21 @@
+"use client"
 import React from 'react';
 import { Button } from '@/shared/ui/components/button';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 function Header() {
+  const router =useRouter();
+
+  const handleSignIn=()=>{
+    router.push("/auth")
+  }
+
   return (
     <header className="w-full flex items-center justify-between px-12 py-4">
       <div className="flex items-center gap-4">
         <span
-          className="text-2xl font-[900] text-[rgb(11, 10, 9)
-]"
+          className="text-2xl font-[900] text-[rgb(11,10,9)]"
         >
           Resume Builder
         </span>
@@ -24,6 +31,7 @@ function Header() {
         <Button
           variant="ghost"
           size="sm"
+          onClick={handleSignIn}
           className="text-blue-900 hover:text-gray-900 font-semibold text-lg cursor-pointer"
         >
           Sign In

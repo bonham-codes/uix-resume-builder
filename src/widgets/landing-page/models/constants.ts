@@ -1,6 +1,6 @@
 export const templates = Array.from({ length: 5 }, (_, i) => ({
   id: i + 1,
-  image: 'images/image-14.svg',
+  image: '/images/template-dashboard.png',
   name: `Template ${i + 1}`,
 }));
 

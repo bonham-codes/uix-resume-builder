@@ -32,10 +32,9 @@ export default function GoogleCallbackClient() {
         setSuccess('Authenticating with backend...');
 
         const authResponse = await sendAuthCodeToBackend(code);
-
         if (authResponse.status === 'success') {
           setSuccess('Authentication successful! Redirecting...');
-
+          localStorage.setItem('userId', authResponse.id); 
           localStorage.setItem('user', JSON.stringify(authResponse));
 
           setTimeout(() => {

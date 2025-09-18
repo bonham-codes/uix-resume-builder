@@ -1,6 +1,6 @@
 import { Input } from '@/shared/ui/components/input';
 
-import type { FormSchema, FormField as IFormField } from '@entities/data-schema';
+import type { FormSchema, FormField as IFormField } from '@entities/resume';
 import { cn } from '@shared/lib/cn';
 import { TiptapTextArea } from '@shared/ui/components/textarea';
 import { Draggable } from './draggable';

@@ -1,6 +1,6 @@
 'use client';
 
-import { useTemplateFormData, useTemplateFormSchema } from '@entities/data-schema';
+import { useTemplateFormData, useTemplateFormSchema } from '@entities/resume';
 import { FormPageBuilder, Sidebar } from '@widgets/form-page-builder';
 import { FormPageBuilderProvider } from '@widgets/form-page-builder/models/ctx';
 import { useEffect, useMemo, useState } from 'react';

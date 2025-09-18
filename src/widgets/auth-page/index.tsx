@@ -76,6 +76,7 @@ export default function AuthPage() {
 
     checkEmailMutation.mutate(email, {
       onSuccess: (emailCheckResult) => {
+        console.log(emailCheckResult);
         const emailExists = emailCheckResult.emailExists ?? false;
 
         if (emailExists) {

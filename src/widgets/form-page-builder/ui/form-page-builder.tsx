@@ -1,4 +1,4 @@
-import type { FormSchema } from '@entities/data-schema';
+import type { FormSchema } from '@entities/resume';
 import { ResumeRenderer } from '@features/resume/renderer';
 import { aniketSampleData } from '@features/resume/sample-data-aniket';
 import aniketTemplate from '@features/resume/templates/aniket';

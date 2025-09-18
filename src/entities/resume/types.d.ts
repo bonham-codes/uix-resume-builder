@@ -138,4 +138,6 @@ export type TransformedResumeData = {
       ongoing: boolean;
     }[];
   };
+
+  templateId: string;
 };

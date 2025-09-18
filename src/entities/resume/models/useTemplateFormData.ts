@@ -78,10 +78,10 @@ export function useTemplateFormSchema() {
   });
 }
 
-export function useTemplateFormData() {
+export function useTemplateFormData(id: string = '447589e7-c733-4ccf-b0d6-db691bea8353') {
   return useFetch<ResumeData, Error, TransformedResumeData>({
     queryKey: ['resume-data'],
-    queryFn: getResumeData,
+    queryFn: () => getResumeData(id),
     select: (data) => {
       return transformResumeData(data);
     },

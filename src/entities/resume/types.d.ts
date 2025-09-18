@@ -85,6 +85,8 @@ export type ResumeData = {
       ongoing: boolean;
     }>;
   };
+
+  templateId: string;
 };
 
 export type TransformedResumeData = {

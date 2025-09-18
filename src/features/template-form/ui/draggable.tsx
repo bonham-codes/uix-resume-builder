@@ -21,8 +21,6 @@ export function Draggable({
         const collapsedTitleValue = item[section.collapsedState?.titleKey];
         const collapsedSubTitleValue = item[section.collapsedState?.subTitleKey];
 
-        console.log(collapsedTitleValue, collapsedSubTitleValue);
-
         return (
           <div
             key={i}
@@ -59,7 +57,6 @@ export function Draggable({
                     >
                       {section[key]?.label}
                       {getItem(section[key], value, (value) => {
-                        console.log(value, data);
                         const newData = [...data];
                         newData[i][key] = value;
 

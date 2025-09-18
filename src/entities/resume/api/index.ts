@@ -1,6 +1,7 @@
 import { sleep } from '@/shared/lib/sleep';
 
 import type { FormSchema, ResumeData } from '../types';
+import { fetch } from '@shared/api';
 
 const data = {
   personalDetails: {
@@ -313,70 +314,76 @@ const resumeData = {
 };
 
 export async function getResumeData(id: string): Promise<ResumeData> {
-  const data = await fetch(`http://localhost:3002/resume/${id}`);
-  const json = await data.json();
+  const data = await fetch<ResumeData>(`resume/${id}`);
 
-  if (json) {
-    if (json.personalDetails.items.length === 0) {
-      json.personalDetails.items.push({
-        id: 'pd-1',
-        fullName: '',
-        email: '',
-        title: '',
-        phone: '',
-        address: '',
-        linkedin: '',
-        github: '',
-      });
-    }
-
-    if (json.professionalSummary.items.length === 0) {
-      json.professionalSummary.items.push({
-        id: 'ps-1',
-        summary: '',
-      });
-    }
-
-    if (json.experience.items.length === 0) {
-      json.experience.items.push({
-        id: 'exp-1-1',
-        company: '',
-        position: '',
-        location: '',
-        startDate: '',
-        endDate: '',
-        ongoing: true,
-        link: '',
-        description: '',
-      });
-    }
-
-    if (json.skills.items.length === 0) {
-      json.skills.items.push({
-        id: 'skill-1',
-        name: '',
-        category: 'Programming Languages',
-        level: 'Expert',
-      });
-    }
-
-    if (json.education.items.length === 0) {
-      json.education.items.push({
-        id: 'edu-1',
-        degree: '',
-        institution: '',
-        fieldOfStudy: '',
-        startDate: '',
-        endDate: '',
-        grade: '',
-        ongoing: false,
-      });
-    }
+  if (data.personalDetails.items.length === 0) {
+    data.personalDetails.items.push({
+      id: 'pd-1',
+      fullName: 'John Doe',
+      email: 'john.doe@example.com',
+      title: '',
+      phone: '1234567890',
+      address: '123 Main St, Anytown, USA',
+      linkedin: 'https://www.linkedin.com/in/john-doe',
+      github: '',
+    });
   }
 
-  console.log(data);
+  // if (data.professionalSummary.items.length === 0) {
+  //   data.professionalSummary.items.push({
+  //     id: 'ps-1',
+  //     summary: '',
+  //   });
+  // }
 
-  return data.json();
+  data.professionalSummary = {
+    id: 'professional-1',
+    title: 'Professional Summary',
+    items: [
+      {
+        id: 'ps-1',
+        summary: 'I am a software engineer with 10 years of experience in the industry.',
+      },
+    ],
+  };
+
+  if (data.experience.items.length === 0) {
+    data.experience.items.push({
+      id: 'exp-1-1',
+      company: 'Google',
+      position: 'Software Engineer',
+      location: 'San Francisco, CA',
+      startDate: '',
+      endDate: '2024-01-01',
+      ongoing: true,
+      link: 'https://www.google.com',
+      description: '',
+    });
+  }
+
+  if (data.skills.items.length === 0) {
+    data.skills.items.push({
+      id: 'skill-1',
+      name: 'JavaScript',
+      category: 'Programming Languages',
+      level: 'Expert',
+    });
+  }
+
+  if (data.education.items.length === 0) {
+    data.education.items.push({
+      id: 'edu-1',
+      degree: 'Bachelor of Science in Computer Science',
+      institution: 'Harvard University',
+      fieldOfStudy: 'Computer Science',
+      startDate: '',
+      endDate: '2024-01-01',
+      grade: 'A',
+      ongoing: true,
+    });
+  }
+
+  return data;
 }
 
 export async function getResumeSchema(): Promise<FormSchema> {
@@ -384,7 +391,7 @@ export async function getResumeSchema(): Promise<FormSchema> {
 }
 
 export async function getResumeTemplate(id: string): Promise<JSON> {
-  const data = await fetch(`/template/${id}`);
+  const data = await fetch(`template/${id}`);
 
   return data.json();
 }

@@ -4,6 +4,7 @@ import type { FormSchema, FormField as IFormField } from '@entities/resume';
 import { cn } from '@shared/lib/cn';
 import { TiptapTextArea } from '@shared/ui/components/textarea';
 import { Draggable } from './draggable';
+import { UrlInput } from './url';
 
 export function TemplateForm({
   formSchema,
@@ -20,8 +21,7 @@ export function TemplateForm({
     switch (section.type) {
       case 'text':
       case 'email':
-      case 'tel':
-      case 'url': {
+      case 'tel': {
         return (
           <Input
             placeholder={section.placeholder}
@@ -58,13 +58,15 @@ export function TemplateForm({
       case 'draggable': {
         return <Draggable data={data} section={section} onChange={onChange} getItem={getItem} />;
       }
+
+      case 'url': {
+        return <UrlInput data={data} onChange={onChange} section={section} />;
+      }
     }
   }
 
   const currentData = values?.[currentStep];
   const currentSchema = formSchema?.[currentStep];
-
-  console.log(currentData);
 
   if (!currentSchema || !currentData) return null;
 

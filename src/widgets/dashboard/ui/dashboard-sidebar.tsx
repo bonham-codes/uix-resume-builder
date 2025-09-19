@@ -1,5 +1,4 @@
 "use client"
-import { useLogoutUser } from "@entities/auth-page/api/auth-queries";
 import { 
   Sidebar, 
   SidebarContent, 
@@ -7,12 +6,10 @@ import {
   SidebarGroupContent, 
   SidebarGroupLabel, 
   SidebarHeader,
-  SidebarFooter,
   SidebarMenu, 
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@shared/ui/sidebar";
-import { Button } from "@shared/ui/button";
 import { 
   Home, 
   FileText, 
@@ -20,24 +17,13 @@ import {
   HelpCircle, 
   LogOut, 
   Sparkles, 
-  Linkedin,
-  Layout,
-  Crown
+
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 export default function DashboardSidebar() {
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const pathname = usePathname();
-  const logoutMutation = useLogoutUser();
-
-  const handleLogout = async () => {
-    setIsLoggingOut(true);
-    await logoutMutation.mutateAsync();
-    setIsLoggingOut(false);
-  };
 
   return (
     <Sidebar className="bg-[rgba(245,248,250,1)] rounded-3xl m-3 w-[249px]">
@@ -150,13 +136,12 @@ export default function DashboardSidebar() {
 
               <SidebarMenuItem>
                 <SidebarMenuButton 
-                  onClick={handleLogout}
-                  disabled={isLoggingOut}
+                  
                   className="h-9 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                 >
                   <div className="flex items-center">
                     <LogOut className="w-5 h-5" />
-                    {isLoggingOut ? 'Logging out...' : 'Logout'}
+                    Logout
                   </div>
                 </SidebarMenuButton>
               </SidebarMenuItem>

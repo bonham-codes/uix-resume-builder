@@ -1,16 +1,16 @@
 "use client";
 import { fetchUserDetails } from "@entities/auth-page/api/auth-queries";
 import { useGetAllResumes } from "@entities/resume/api/get-all-resume";
+import { formatDate } from "@shared/lib/date-time";
 import { SidebarProvider } from "@shared/ui/sidebar";
 import { useQuery } from "@tanstack/react-query";
 import DashboardSidebar from "@widgets/dashboard/ui/dashboard-sidebar";
 import WelcomeHeader from "@widgets/dashboard/ui/welcome-header";
-import { Bell, Copy, MoreVertical, Search } from "lucide-react";
+import { Bell, MoreVertical, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function DashboardLayout() {
   const [userId, setUserId] = useState<string | null>(null);
-  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     const id = localStorage.getItem("userId");
@@ -23,9 +23,7 @@ export default function DashboardLayout() {
     enabled: !!userId,
   });
 
-  const {
-    data: resumes,
-  } = useGetAllResumes(userId);
+  const { data: resumes } = useGetAllResumes(userId);
 
   return (
     <SidebarProvider>
@@ -98,8 +96,6 @@ export default function DashboardLayout() {
                 ))}
               </div>
             </div>
-
-            <div></div>
           </main>
         </div>
       </div>
@@ -121,56 +117,35 @@ interface ResumeCardProps {
 }
 
 function ResumeCard({ resume, index }: ResumeCardProps) {
-  const [hovered, setHovered] = useState(false);
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffInHours = Math.floor(
-      (now.getTime() - date.getTime()) / (1000 * 60)
-    );
-
-    if (diffInHours < 24) {
-      return `edited ${diffInHours}h ago`;
-    } else {
-      const diffInDays = Math.floor(diffInHours / 24);
-      return `edited ${diffInDays}d ago`;
-    }
-  };
-
   return (
-    <div
-      className="relative w-[240px] h-[320px] rounded-2xl bg-white shadow-sm border transition-all duration-300 overflow-hidden group cursor-pointer"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {/* Resume Preview */}
-      <div className="w-full h-[75%] bg-gradient-to-r from-slate-900 to-slate-100 rounded-t-2xl"></div>
-
-      {/* Resume Info */}
-      <div className="px-3 py-2 flex justify-between items-center">
-        <div>
-          <h3 className="font-medium text-sm">{resume.title}</h3>
-          <p className="text-xs text-gray-500">
-            {formatDate(resume.updatedAt)} · A4
-          </p>
+    <div className="relative w-[240px] h-[320px] rounded-2xl bg-white shadow-sm border transition-all duration-300 overflow-hidden group cursor-pointer">
+      <div className="w-full h-full relative rounded-t-2xl">
+        <div className="">
+          <img
+            src="images/image-14.svg"
+            alt={resume.title}
+            className="w-full h-full object-cover"
+          />
         </div>
-        <MoreVertical className="w-5 h-5 text-gray-500" />
+
+        <div className="absolute bottom-0 px-3 py-2 flex justify-between items-center bg-white p-8 w-full">
+          <div>
+            <h3 className="font-medium text-sm">{resume.title}</h3>
+            <p className="text-xs text-gray-500">
+              {formatDate(resume.updatedAt)} · A4
+            </p>
+          </div>
+          <MoreVertical className="w-5 h-5 text-gray-500" />
+        </div>
       </div>
 
-      {hovered && (
-        <div className="rounded-2xl absolute inset-0 bg-white/40 backdrop-blur-sm flex flex-col justify-center items-center gap-6 text-center transition-all duration-300">
-          <button className="text-sm font-semibold text-purple-900 hover:underline flex items-center gap-1">
-            VIEW RESUME →
-          </button>
+      <div className="rounded-2xl absolute inset-0 bg-white/40 backdrop-blur-sm flex flex-col justify-center items-center gap-6 text-center transition-all duration-300 opacity-0 group-hover:opacity-100">
+        <button className="text-sm font-semibold text-purple-900 hover:underline flex items-center gap-1">
+          VIEW RESUME →
+        </button>
 
-          <div className="w-12 h-[1px] bg-gray-300"></div>
-
-          <button className="text-sm font-semibold text-purple-900 hover:underline flex items-center gap-1">
-            DUPLICATE <Copy className="w-4 h-4" />
-          </button>
-        </div>
-      )}
+        <div className="w-12 h-[1px] bg-gray-300"></div>
+      </div>
     </div>
   );
 }

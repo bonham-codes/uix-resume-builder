@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { fetch } from '@shared/api';
 
 export interface ResumeItem {
   id: string;
@@ -25,29 +26,25 @@ export interface Resume {
 
 export type GetAllResumesResponse = Resume[];
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 
 export const fetchAllResumes = async (userId: string): Promise<GetAllResumesResponse> => {
   if (!userId) {
     throw new Error('User ID is required');
   }
-
-  const response = await fetch(`${BACKEND_URL}/resume/${userId}/getAll`, {
-    method: 'GET',
+  const response = await fetch<GetAllResumesResponse>(`resume/${userId}/getAll`, {
+    options:{
+      method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
     credentials: 'include',
+
+    }
+    
   });
 
-  if (!response.ok) {
-    const errorData = await response.text();
-    throw new Error(`Failed to fetch resumes: ${response.status} ${response.statusText} - ${errorData}`);
-  }
-
-  const data = await response.json();
-  return data;
+  return response;
 };
 
 export const useGetAllResumes = (

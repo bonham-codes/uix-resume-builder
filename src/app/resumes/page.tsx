@@ -41,13 +41,8 @@ export default function DashboardLayout() {
                 className="flex-1 border-none outline-none bg-transparent text-base text-[rgb(149,157,168)] leading-[1.375em] tracking-[-1.125%]"
               />
             </div>
-
-            <div className="flex items-center gap-6">
-              <div className="flex items-center justify-center bg-white rounded-full w-[53px] h-[53px]">
-                <Bell className="w-6 h-6 text-[rgb(49,60,66)]" />
-              </div>
-
-              <div className="flex items-center gap-2">
+           
+              <div className="flex items-center gap-3">
                 <div className="flex items-center justify-center bg-blue-200 rounded-full overflow-hidden h-[53px] w-[53px]">
                   <span className="text-xl font-bold text-gray-600">
                     {user?.firstName?.charAt(0)}
@@ -66,7 +61,6 @@ export default function DashboardLayout() {
                   </span>
                 </div>
               </div>
-            </div>
           </header>
 
           <main className="flex bg-[rgb(245,248,250)] mt-3 rounded-[36px] overflow-hidden pb-4 h-full">

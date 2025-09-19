@@ -22,7 +22,56 @@ interface AuthResponse {
   message?: string;
 }
 
+interface User {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  deleted_at: string | null;
+  email: string;
+  googleId: string | null;
+  linkedInId: string | null;
+  firstName: string;
+  lastName: string | null;
+  password: string;
+  isVerified: boolean;
+  isLoggedIn: boolean;
+}
+
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+// export const fetchUserDetails = async (userId: string): Promise<User> => {
+//  const token = localStorage.getItem('authToken');
+
+//   const response = await fetch(`${BACKEND_URL}/auth/${userId}`, {
+//     options:{
+//       method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${token}`,  
+//     },
+//     credentials: 'include', 
+
+//     }
+//   });
+
+ export const fetchUserDetails = async (userId: string): Promise<User> => {
+
+  const response = await fetch<User>(`auth/${userId}`, {
+    options: {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    },
+  });
+
+  return response;
+};
+
 const checkEmailExistsAPI = async (email: string): Promise<EmailCheckResponse> => {
+
   const response = await fetch<EmailCheckResponse>('auth/check-email', {
     options: {
       method: 'POST',

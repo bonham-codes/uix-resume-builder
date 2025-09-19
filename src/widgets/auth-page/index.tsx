@@ -20,7 +20,7 @@ import GoogleSignInButton from '@shared/ui/components/google-signin-button';
 import { cn } from '@shared/lib/utils';
 import LinkedInSignInButton from '@shared/ui/components/linkedIn-signin-button';
 
-export default function AuthPage() {
+export default function AuthPageWidget() {
   const router = useRouter();
 
   const [step, setStep] = useState<'initial' | 'email' | 'password' | 'code' | 'register' | 'socialAccounts'>(

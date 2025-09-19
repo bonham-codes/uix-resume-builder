@@ -6,9 +6,7 @@ export const FormPageBuilderContext = createContext<{
   navs: { label: string; name: string }[];
 }>({
   currentStep: '',
-  setCurrentStep: () => {
-    console.log('setCurrentStep');
-  },
+  setCurrentStep: () => {},
   navs: [],
 });
 

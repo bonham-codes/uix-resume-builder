@@ -40,30 +40,39 @@ interface User {
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-export const fetchUserDetails = async (userId: string): Promise<User> => {
- const token = localStorage.getItem('authToken');
+// export const fetchUserDetails = async (userId: string): Promise<User> => {
+//  const token = localStorage.getItem('authToken');
 
-  const response = await fetch(`${BACKEND_URL}/auth/${userId}`, {
-    options:{
+//   const response = await fetch(`${BACKEND_URL}/auth/${userId}`, {
+//     options:{
+//       method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${token}`,  
+//     },
+//     credentials: 'include', 
+
+//     }
+//   });
+
+ export const fetchUserDetails = async (userId: string): Promise<User> => {
+
+  const response = await fetch<User>(`auth/${userId}`, {
+    options: {
       method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,  
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
     },
-    credentials: 'include', 
-
-    }
   });
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch user details');
-  }
-
-  const data = await response.json();
-  return data;};
+  return response;
+};
 
 const checkEmailExistsAPI = async (email: string): Promise<EmailCheckResponse> => {
-  const response = await fetch(`${BACKEND_URL}/auth/check-email`, {
+
+  const response = await fetch<EmailCheckResponse>('auth/check-email', {
     options: {
       method: 'POST',
       headers: {
@@ -73,16 +82,12 @@ const checkEmailExistsAPI = async (email: string): Promise<EmailCheckResponse> =
     },
   });
 
-  if (!response.ok) {
-    throw new Error(`Failed to check email: ${response.statusText}`);
-  }
-
-  return await response.json();
+  return response;
 };
 
 const verifyOtpAPI = async ({ email, otp }: { email: string; otp: string }): Promise<boolean> => {
-  const response = await fetch(`${BACKEND_URL}/auth/verify-otp`, {
-   options: {
+  const response = await fetch<boolean>('auth/verify-otp', {
+    options: {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -91,17 +96,12 @@ const verifyOtpAPI = async ({ email, otp }: { email: string; otp: string }): Pro
     },
   });
 
-  if (!response.ok) {
-    throw new Error(`Failed to verify OTP: ${response.statusText}`);
-  }
-
-  const data = await response.json();
-  return data.success || true;
+  return response;
 };
 
 const registerUserAPI = async (userData: RegisterUserData): Promise<AuthResponse> => {
-  const response = await fetch(`${BACKEND_URL}/auth/register`, {
-   options: {
+  const response = await fetch<AuthResponse>('auth/register', {
+    options: {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -110,15 +110,11 @@ const registerUserAPI = async (userData: RegisterUserData): Promise<AuthResponse
     },
   });
 
-  if (!response.ok) {
-    throw new Error(`Registration failed: ${response.statusText}`);
-  }
-
-  return await response.json();
+  return response;
 };
 
 const loginUserAPI = async ({ email, password }: { email: string; password: string }): Promise<AuthResponse> => {
-  const response = await fetch(`${BACKEND_URL}/auth/email-signin`, {
+  const response = await fetch<AuthResponse>('auth/email-signin', {
     options: {
       method: 'POST',
       headers: {
@@ -128,34 +124,18 @@ const loginUserAPI = async ({ email, password }: { email: string; password: stri
     },
   });
 
-  if (!response.ok) {
-    throw new Error(`Login failed: ${response.statusText}`);
-  }
-
-  return await response.json();
+  return response;
 };
 
 export const useCheckEmailExists = () => {
   return useMutation({
     mutationFn: checkEmailExistsAPI,
-    onSuccess: (data) => {
-      console.log('Email check successful:', data);
-    },
-    onError: (error) => {
-      console.error('Email check failed:', error);
-    },
   });
 };
 
 export const useVerifyOtp = () => {
   return useMutation({
     mutationFn: verifyOtpAPI,
-    onSuccess: (data) => {
-      console.log('OTP verified successfully:', data);
-    },
-    onError: (error) => {
-      console.error('OTP verification failed:', error);
-    },
   });
 };
 
@@ -166,15 +146,11 @@ export const useRegisterUser = () => {
   return useMutation({
     mutationFn: registerUserAPI,
     onSuccess: (data) => {
-      console.log('User registered successfully:', data);
       if (data.token) {
         localStorage.setItem('authToken', data.token);
       }
       setUser({ ...data.user, token: data.token });
       queryClient.invalidateQueries({ queryKey: ['user'] });
-    },
-    onError: (error) => {
-      console.error('Registration failed:', error);
     },
   });
 };
@@ -186,15 +162,11 @@ export const useLoginUser = () => {
   return useMutation({
     mutationFn: loginUserAPI,
     onSuccess: (data) => {
-      console.log('User logged in successfully:', data);
       if (data.token) {
         localStorage.setItem('authToken', data.token);
       }
       setUser({ ...data.user, token: data.token });
       queryClient.invalidateQueries({ queryKey: ['user'] });
-    },
-    onError: (error) => {
-      console.error('Login failed:', error);
     },
   });
 };

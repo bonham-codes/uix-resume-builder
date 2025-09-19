@@ -65,6 +65,7 @@ export function transformResumeData(data: ResumeData): TransformedResumeData {
     skills: transformSkills(data.skills),
     experience: transformExperience(data.experience),
     education: transformEducation(data.education),
+    templateId: data.templateId,
   };
 }
 
@@ -78,10 +79,10 @@ export function useTemplateFormSchema() {
   });
 }
 
-export function useTemplateFormData() {
+export function useTemplateFormData(id: string = 'e70de270-5e70-4ce7-8527-a66d17ca8b3a') {
   return useFetch<ResumeData, Error, TransformedResumeData>({
     queryKey: ['resume-data'],
-    queryFn: getResumeData,
+    queryFn: () => getResumeData(id),
     select: (data) => {
       return transformResumeData(data);
     },

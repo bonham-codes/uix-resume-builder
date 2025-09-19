@@ -1,6 +1,7 @@
 import { sleep } from '@/shared/lib/sleep';
 
 import type { FormSchema, ResumeData } from '../types';
+import { fetch } from '@shared/api';
 
 const data = {
   personalDetails: {
@@ -241,13 +242,13 @@ const resumeData = {
     items: [
       {
         id: 'pd-1',
-        fullName: 'Arjun Kumar Singh',
-        email: 'arjun.singh@email.com',
-        title: 'Software Engineer',
-        phone: '+91 9876543210',
-        address: 'Sector 14, Gurugram, Haryana 122001',
-        linkedin: 'https://linkedin.com/in/arjunkumar',
-        github: 'https://github.com/arjunkumar',
+        fullName: '',
+        email: '',
+        title: '',
+        phone: '',
+        address: '',
+        linkedin: '',
+        github: '',
       },
     ],
   },
@@ -258,8 +259,7 @@ const resumeData = {
     items: [
       {
         id: 'ps-1',
-        summary:
-          'Full-stack developer with 3+ years of experience building scalable web applications using React, Node.js, and modern cloud technologies. Passionate about clean code and user experience.',
+        summary: '',
       },
     ],
   },
@@ -270,39 +270,14 @@ const resumeData = {
     items: [
       {
         id: 'exp-1-1',
-        company: 'TechCorp India',
-        position: 'Senior Frontend Developer',
-        location: 'Gurugram, Haryana',
-        startDate: '2022-06',
+        company: '',
+        position: '',
+        location: '',
+        startDate: '',
         endDate: '',
         ongoing: true,
-        link: 'https://techcorp.com',
-        description:
-          'Led development of customer-facing React applications serving 100K+ users. Implemented responsive designs, optimized performance by 40%, and mentored junior developers. Built reusable component library used across 5+ projects.',
-      },
-      {
-        id: 'exp-1-2',
-        company: 'StartupXYZ',
-        position: 'Full Stack Developer',
-        location: 'Delhi, India',
-        startDate: '2021-01',
-        endDate: '2022-05',
-        ongoing: false,
-        link: 'https://startupxyz.com',
-        description:
-          'Developed end-to-end web applications using MERN stack. Built REST APIs handling 10K+ daily requests, implemented authentication systems, and integrated payment gateways. Worked in agile team of 8 developers.',
-      },
-      {
-        id: 'exp-1-3',
-        company: 'InfoSys Limited',
-        position: 'Software Engineer Trainee',
-        location: 'Bangalore, Karnataka',
-        startDate: '2020-07',
-        endDate: '2020-12',
-        ongoing: false,
-        link: 'https://infosys.com',
-        description:
-          '<ul><li>Completed comprehensive <strong>6-month training program</strong> in Java, Spring Boot, and Angular</li><li>Developed internal HR tools serving <strong>500+ employees</strong></li><li>Participated in daily code reviews and followed <em>enterprise coding standards</em></li><li>Learned software development lifecycle and <strong>Agile methodologies</strong></li><li>Achieved <em>Outstanding Performance</em> rating in final assessment</li></ul>',
+        link: '',
+        description: '',
       },
     ],
   },
@@ -313,122 +288,9 @@ const resumeData = {
     items: [
       {
         id: 'skill-1',
-        name: 'JavaScript',
+        name: '',
         category: 'Programming Languages',
         level: 'Expert',
-      },
-      {
-        id: 'skill-2',
-        name: 'TypeScript',
-        category: 'Programming Languages',
-        level: 'Advanced',
-      },
-      {
-        id: 'skill-3',
-        name: 'Python',
-        category: 'Programming Languages',
-        level: 'Intermediate',
-      },
-      {
-        id: 'skill-4',
-        name: 'React',
-        category: 'Frontend',
-        level: 'Expert',
-      },
-      {
-        id: 'skill-5',
-        name: 'Next.js',
-        category: 'Frontend',
-        level: 'Advanced',
-      },
-      {
-        id: 'skill-6',
-        name: 'Vue.js',
-        category: 'Frontend',
-        level: 'Intermediate',
-      },
-      {
-        id: 'skill-7',
-        name: 'Node.js',
-        category: 'Backend',
-        level: 'Advanced',
-      },
-      {
-        id: 'skill-8',
-        name: 'Express.js',
-        category: 'Backend',
-        level: 'Advanced',
-      },
-      {
-        id: 'skill-9',
-        name: 'MongoDB',
-        category: 'Database',
-        level: 'Advanced',
-      },
-      {
-        id: 'skill-10',
-        name: 'PostgreSQL',
-        category: 'Database',
-        level: 'Intermediate',
-      },
-      {
-        id: 'skill-11',
-        name: 'AWS',
-        category: 'Cloud',
-        level: 'Intermediate',
-      },
-      {
-        id: 'skill-12',
-        name: 'Docker',
-        category: 'DevOps',
-        level: 'Intermediate',
-      },
-    ],
-  },
-
-  projects: {
-    id: 'projects-1',
-    title: 'Projects',
-    items: [
-      {
-        id: 'proj-1',
-        techStack: ['React', 'Node.js', 'MongoDB', 'Express.js', 'JWT'],
-        startDate: '2023-03',
-        endDate: '2023-06',
-        ongoing: false,
-        link: 'https://github.com/arjunkumar/ecommerce-app',
-        description:
-          'Full-stack e-commerce platform with user authentication, product catalog, shopping cart, and payment integration using Razorpay. Implemented admin dashboard for inventory management and order tracking.',
-      },
-      {
-        id: 'proj-2',
-        techStack: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Tailwind CSS'],
-        startDate: '2023-08',
-        endDate: '',
-        ongoing: true,
-        link: 'https://github.com/arjunkumar/task-manager',
-        description:
-          'Modern task management application with real-time collaboration features. Built with server-side rendering, optimistic updates, and responsive design. Currently adding team workspace functionality.',
-      },
-      {
-        id: 'proj-3',
-        techStack: ['React', 'Firebase', 'Chart.js', 'Material-UI'],
-        startDate: '2022-11',
-        endDate: '2023-01',
-        ongoing: false,
-        link: 'https://github.com/arjunkumar/expense-tracker',
-        description:
-          'Personal expense tracking app with data visualization and budget alerts. Features include category-wise spending analysis, monthly reports, and cloud sync across devices.',
-      },
-      {
-        id: 'proj-4',
-        techStack: ['Vue.js', 'Python', 'FastAPI', 'SQLite'],
-        startDate: '2022-05',
-        endDate: '2022-08',
-        ongoing: false,
-        link: 'https://github.com/arjunkumar/weather-dashboard',
-        description:
-          'Weather dashboard with location-based forecasts and historical data analysis. Integrated multiple weather APIs and implemented caching for improved performance.',
       },
     ],
   },
@@ -439,36 +301,97 @@ const resumeData = {
     items: [
       {
         id: 'edu-1',
-        degree: 'Bachelor of Technology',
-        institution: 'Delhi Technological University',
-        fieldOfStudy: 'Computer Science Engineering',
-        startDate: '2016-08',
-        endDate: '2020-06',
-        grade: '8.2 CGPA',
-        ongoing: false,
-      },
-      {
-        id: 'edu-2',
-        degree: 'Senior Secondary',
-        institution: 'DAV Public School',
-        fieldOfStudy: 'Science (PCM)',
-        startDate: '2014-04',
-        endDate: '2016-03',
-        grade: '92%',
+        degree: '',
+        institution: '',
+        fieldOfStudy: '',
+        startDate: '',
+        endDate: '',
+        grade: '',
         ongoing: false,
       },
     ],
   },
 };
 
-export async function getResumeData(): Promise<ResumeData> {
-  await sleep(100);
+export async function getResumeData(id: string): Promise<ResumeData> {
+  const data = await fetch<ResumeData>(`resume/${id}`);
 
-  return resumeData;
+  if (data.personalDetails.items.length === 0) {
+    data.personalDetails.items.push({
+      id: 'pd-1',
+      fullName: 'John Doe',
+      email: 'john.doe@example.com',
+      title: '',
+      phone: '1234567890',
+      address: '123 Main St, Anytown, USA',
+      linkedin: 'https://www.linkedin.com/in/john-doe',
+      github: '',
+    });
+  }
+
+  // if (data.professionalSummary.items.length === 0) {
+  //   data.professionalSummary.items.push({
+  //     id: 'ps-1',
+  //     summary: '',
+  //   });
+  // }
+
+  data.professionalSummary = {
+    id: 'professional-1',
+    title: 'Professional Summary',
+    items: [
+      {
+        id: 'ps-1',
+        summary: 'I am a software engineer with 10 years of experience in the industry.',
+      },
+    ],
+  };
+
+  if (data.experience.items.length === 0) {
+    data.experience.items.push({
+      id: 'exp-1-1',
+      company: 'Google',
+      position: 'Software Engineer',
+      location: 'San Francisco, CA',
+      startDate: '',
+      endDate: '2024-01-01',
+      ongoing: true,
+      link: 'https://www.google.com',
+      description: '',
+    });
+  }
+
+  if (data.skills.items.length === 0) {
+    data.skills.items.push({
+      id: 'skill-1',
+      name: 'JavaScript',
+      category: 'Programming Languages',
+      level: 'Expert',
+    });
+  }
+
+  if (data.education.items.length === 0) {
+    data.education.items.push({
+      id: 'edu-1',
+      degree: 'Bachelor of Science in Computer Science',
+      institution: 'Harvard University',
+      fieldOfStudy: 'Computer Science',
+      startDate: '',
+      endDate: '2024-01-01',
+      grade: 'A',
+      ongoing: true,
+    });
+  }
+
+  return data;
 }
 
 export async function getResumeSchema(): Promise<FormSchema> {
-  await sleep(100);
-
   return data;
+}
+
+export async function getResumeTemplate(id: string): Promise<JSON> {
+  const data = await fetch(`template/${id}`);
+
+  return data.json();
 }

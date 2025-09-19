@@ -41,7 +41,7 @@ export function FormPageBuilder({ formSchema, defaultValues }: { formSchema: For
       </div>
 
       <div className="pl-8 flex-1 h-full max-h-[calc(100vh-32px)] overflow-y-auto pb-5" style={{ marginLeft: width }}>
-        <div className="flex justify-end items-center gap-4">
+        {/* <div className="flex justify-end items-center gap-4">
           <div className="flex items-center gap-2">
             <Image src="/images/circle-alert.svg" alt="circle-alert" width={16} height={16} />
             <span className="text-[13px] font-regular text-[#E12121]">Sign In to save progress</span>
@@ -49,7 +49,7 @@ export function FormPageBuilder({ formSchema, defaultValues }: { formSchema: For
           <Button className="border border-[#CBE7FF] bg-[#E9F4FF] text-[18px] font-semibold text-[#005FF2] h-12">
             Sign In
           </Button>
-        </div>
+        </div> */}
         <div
           className="mt-6 mb-4"
           style={{

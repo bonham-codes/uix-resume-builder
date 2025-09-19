@@ -1,6 +1,6 @@
 import { cn } from '@shared/lib/cn';
 import * as React from 'react';
-import { ShadcnInput } from '../input';
+import { ShadcnInput } from '..';
 
 interface InputProps extends React.ComponentProps<'input'> {
   leftIcon?: React.ReactNode;

@@ -63,17 +63,17 @@ const HeroSection = () => {
           <div className="flex -space-x-2">
             <Avatar className="w-12 h-12 border-2 border-white">
               <AvatarImage src="/placeholder.svg" />
-              <AvatarFallback>JD</AvatarFallback>
+              <AvatarFallback className='text-black'>JD</AvatarFallback>
             </Avatar>
 
             <Avatar className="w-12 h-12 border-2 border-white">
               <AvatarImage src="/placeholder.svg" />
-              <AvatarFallback>SM</AvatarFallback>
+              <AvatarFallback className='text-black'>SM</AvatarFallback>
             </Avatar>
 
             <Avatar className="w-12 h-12 border-2 border-white">
               <AvatarImage src="/placeholder.svg" />
-              <AvatarFallback>AR</AvatarFallback>
+              <AvatarFallback className='text-black'>AR</AvatarFallback>
             </Avatar>
           </div>
 

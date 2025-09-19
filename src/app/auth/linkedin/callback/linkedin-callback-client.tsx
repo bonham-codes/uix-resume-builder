@@ -43,6 +43,8 @@ export default function LinkedInCallbackClient() {
 
         if (authResponse.status === 'success') {
           setSuccess('Authentication successful! Redirecting...');
+          
+          localStorage.setItem('userId', authResponse.id); 
 
           localStorage.setItem('user', JSON.stringify(authResponse));
 

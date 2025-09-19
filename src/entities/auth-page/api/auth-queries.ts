@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useUserStore } from '../store/user-store';
 
 interface EmailCheckResponse {
@@ -36,17 +37,17 @@ interface User {
   isLoggedIn: boolean;
 }
 
+interface LogoutResponse {
+  message: string;
+}
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export const fetchUserDetails = async (userId: string): Promise<User> => {
- const token = localStorage.getItem('authToken');
-
   const response = await fetch(`${BACKEND_URL}/auth/${userId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,  
     },
     credentials: 'include', 
   });
@@ -114,10 +115,27 @@ const loginUserAPI = async ({ email, password }: { email: string; password: stri
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
+    credentials: 'include',
   });
 
   if (!response.ok) {
     throw new Error(`Login failed: ${response.statusText}`);
+  }
+
+  return await response.json();
+};
+
+const logoutUserAPI = async (): Promise<LogoutResponse> => {
+  const response = await fetch(`${BACKEND_URL}/auth/logout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  });
+
+  if (!response.ok) {
+    throw new Error(`Logout failed: ${response.statusText}`);
   }
 
   return await response.json();
@@ -154,11 +172,9 @@ export const useRegisterUser = () => {
   return useMutation({
     mutationFn: registerUserAPI,
     onSuccess: (data) => {
-      console.log('User registered successfully:', data);
-      if (data.token) {
-        localStorage.setItem('authToken', data.token);
-      }
       setUser({ ...data.user, token: data.token });
+      localStorage.setItem('userId', data.user.id); 
+      localStorage.setItem('user', JSON.stringify(data.user));
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
     onError: (error) => {
@@ -174,15 +190,40 @@ export const useLoginUser = () => {
   return useMutation({
     mutationFn: loginUserAPI,
     onSuccess: (data) => {
-      console.log('User logged in successfully:', data);
-      if (data.token) {
-        localStorage.setItem('authToken', data.token);
-      }
       setUser({ ...data.user, token: data.token });
+      localStorage.setItem('userId', data.user.id); 
+      localStorage.setItem('user', JSON.stringify(data.user));
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
     onError: (error) => {
       console.error('Login failed:', error);
+    },
+  });
+};
+
+export const useLogoutUser = () => {
+  const queryClient = useQueryClient();
+  const clearUser = useUserStore((state) => state.clearUser);
+  const router = useRouter();
+
+  return useMutation({
+    mutationFn: logoutUserAPI,
+    onSuccess: (data) => {
+      localStorage.removeItem('user');
+      localStorage.removeItem('linkedin_oauth_state')
+      localStorage.removeItem('userId');
+      clearUser();
+      queryClient.clear();
+      router.push('/auth');
+    },
+    onError: (error) => {
+      console.error('Logout failed:', error);
+      localStorage.removeItem('linkedin_oauth_state')
+      localStorage.removeItem('user');
+      localStorage.removeItem('userId');
+      clearUser();
+      queryClient.clear();
+      router.push('/auth');
     },
   });
 };

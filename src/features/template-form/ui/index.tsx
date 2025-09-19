@@ -5,6 +5,7 @@ import { cn } from '@shared/lib/cn';
 import { TiptapTextArea } from '@shared/ui/components/textarea';
 import { Draggable } from './draggable';
 import { UrlInput } from './url';
+import type { ResumeData, ResumeDataKey } from '@entities/resume/types';
 
 export function TemplateForm({
   formSchema,
@@ -13,9 +14,9 @@ export function TemplateForm({
   currentStep = 'personalDetails',
 }: {
   formSchema: FormSchema;
-  values: any;
+  values: ResumeData;
   onChange: (data: any) => void;
-  currentStep: string;
+  currentStep: ResumeDataKey;
 }) {
   function getItem(section: IFormField, data: any, onChange: (data: any) => void) {
     switch (section.type) {
@@ -27,8 +28,8 @@ export function TemplateForm({
             placeholder={section.placeholder}
             className={cn(
               'border border-[#959DA8] ring-4 ring-[#f6f6f6] rounded-[8px]',
-              'placeholder:text-[#DBCFD4] text-base text-[#0C1118]',
-              'font-semibold focus:border-[#0059ED] focus:ring-[#CBE7FF] placeholder:text-[#CFD4DB]',
+              'placeholder:text-[#DBCFD4] text-base text-[#0C1118] font-normal',
+              'focus:border-[#0059ED] focus:ring-[#CBE7FF] placeholder:text-[#CFD4DB]',
               'bg-[#FAFBFC]',
             )}
             defaultValue={data}
@@ -44,8 +45,8 @@ export function TemplateForm({
             placeholder={section.placeholder}
             className={cn(
               'border border-[#959DA8] ring-4 ring-[#f6f6f6] rounded-[8px]',
-              'placeholder:text-[#DBCFD4] text-base text-[#0C1118]',
-              'font-semibold focus:border-[#0059ED] focus:ring-[#CBE7FF] placeholder:text-[#CFD4DB]',
+              'placeholder:text-[#DBCFD4] text-base text-[#0C1118] font-normal',
+              'focus:border-[#0059ED] focus:ring-[#CBE7FF] placeholder:text-[#CFD4DB]',
               'bg-[#FAFBFC]',
             )}
             onChange={(_value, html) => {
@@ -55,20 +56,16 @@ export function TemplateForm({
         );
       }
 
-      case 'draggable': {
-        return <Draggable data={data} section={section} onChange={onChange} getItem={getItem} />;
-      }
-
       case 'url': {
         return <UrlInput data={data} onChange={onChange} section={section} />;
       }
     }
   }
 
-  const currentData = values?.[currentStep];
+  const currentData = values[currentStep];
   const currentSchema = formSchema?.[currentStep];
 
-  if (!currentSchema || !currentData) return null;
+  if (!currentSchema || !currentData || typeof currentData === 'string' || !('items' in currentData)) return null;
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -78,23 +75,46 @@ export function TemplateForm({
       </div>
 
       <form className="grid grid-cols-2 gap-4 w-full">
-        {Object.entries(currentData).map(([key, value]) => {
-          const section = currentSchema[key];
+        {currentSchema.itemsType === 'draggable' ? (
+          <div className="col-span-2">
+            <Draggable
+              data={currentData.items}
+              section={currentSchema}
+              onChange={(items) => {
+                onChange({ ...values, [currentStep]: { ...currentData, items } });
+              }}
+              getItem={getItem}
+            />
+          </div>
+        ) : (
+          currentData.items.map((section, itemIdx) => {
+            return Object.entries(section).map(([key, value]) => {
+              const section = currentSchema[key];
 
-          return (
-            <label
-              key={key}
-              className={cn('text-sm text-[#0C1118] font-semibold flex flex-col gap-2', section.fluid && 'col-span-2')}
-              htmlFor={key}
-            >
-              {section.label}
+              if (!section) return null;
 
-              {getItem(section, value, (value) => {
-                onChange({ ...values, [currentStep]: { ...currentData, [key]: value } });
-              })}
-            </label>
-          );
-        })}
+              return (
+                <label
+                  key={key}
+                  className={cn(
+                    'text-sm text-[#0C1118] font-semibold flex flex-col gap-2',
+                    section.fluid && 'col-span-2',
+                  )}
+                  htmlFor={key}
+                >
+                  {section.label}
+
+                  {getItem(section, value, (value) => {
+                    const items = [...currentData.items];
+                    items[itemIdx][key] = value;
+
+                    onChange({ ...values, [currentStep]: { ...currentData, items } });
+                  })}
+                </label>
+              );
+            });
+          })
+        )}
       </form>
     </div>
   );

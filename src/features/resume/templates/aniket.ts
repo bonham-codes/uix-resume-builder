@@ -273,18 +273,12 @@ const aniketTemplate = {
                         id: 'education-school',
                         type: 'text',
                         pathWithFallback: { path: 'data.institution' },
-                        className: 'text-neutral-900 text-base font-semibold',
+                        className: 'text-blue-600 text-base font-semibold',
                       },
                       {
                         id: 'education-period',
                         type: 'text',
                         pathWithFallback: { path: 'data.startDate' },
-                        className: 'text-neutral-600 text-xs',
-                      },
-                      {
-                        id: 'education-period',
-                        type: 'text',
-                        pathWithFallback: { path: 'data.endDate' },
                         className: 'text-neutral-600 text-xs',
                       },
                     ],
@@ -294,11 +288,23 @@ const aniketTemplate = {
                     className: 'flex flex-row justify-between items-center',
                     children: [
                       {
-                        id: 'education-degree',
-                        type: 'text',
-                        pathWithFallback: { path: 'data.fieldOfStudy' },
-                        className: 'text-xs italic text-blue-600',
+                        type: 'container',
+                        className: 'flex flex-row justify-between items-center gap-1',
+                        children: [
+                          {
+                            id: 'education-degree',
+                            type: 'text',
+                            pathWithFallback: { path: 'data.degree' },
+                            className: 'text-xs italic text-black-600',
+                          },
+                          {
+                            type: 'text',
+                            pathWithFallback: { path: 'data.fieldOfStudy' },
+                            className: 'text-xs italic text-black-600',
+                          },
+                        ],
                       },
+
                       {
                         id: 'education-grade',
                         type: 'text',

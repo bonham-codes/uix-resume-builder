@@ -15,9 +15,12 @@ export function FormPageBuilder({ formSchema, defaultValues }: { formSchema: For
 
   const formData = useFormDataStore((state) => state.formData);
   const setFormData = useFormDataStore((state) => state.setFormData);
+
   // const saveMutation = useMutation({
-  //   mutationFn: saveFormDataAPI,
+  //   mutationFn: () => saveFormData(currentStep, formData.id, formData),
   // });
+
+  console.log(currentStep);
 
   useEffect(() => {
     useFormDataStore.setState({ formData: defaultValues ?? {} });
@@ -28,6 +31,8 @@ export function FormPageBuilder({ formSchema, defaultValues }: { formSchema: For
   }
 
   const nextStepIndex = navs.findIndex((item) => item.name === currentStep) + 1;
+
+  console.log(formData[currentStep], currentStep);
 
   return (
     <>

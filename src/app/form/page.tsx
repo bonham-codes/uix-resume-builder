@@ -1,6 +1,7 @@
 'use client';
 
 import { useTemplateFormData, useTemplateFormSchema } from '@entities/resume';
+import { camelToHumanString } from '@shared/lib/string';
 import { FormPageBuilder, Sidebar } from '@widgets/form-page-builder';
 import { FormPageBuilderProvider } from '@widgets/form-page-builder/models/ctx';
 import { useEffect, useMemo, useState } from 'react';
@@ -13,10 +14,16 @@ export default function FormPage() {
 
   const navs = useMemo(
     () =>
-      Object.keys(schema ?? {}).map((key) => ({
-        label: schema?.[key]?.label ?? '',
-        name: key,
-      })) ?? [],
+      Object.keys(resumeData ?? {})
+        .map((key) => {
+          if (key === 'templateId') return null;
+
+          return {
+            label: camelToHumanString(key),
+            name: key,
+          };
+        })
+        .filter(Boolean) ?? [],
     [schema, resumeData],
   );
 

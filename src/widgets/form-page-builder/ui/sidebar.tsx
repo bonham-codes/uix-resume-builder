@@ -8,6 +8,7 @@ import { ProgressCircle } from '@shared/ui/progress-circle';
 import { useFormPageBuilder } from '../models/ctx';
 import Image from 'next/image';
 import { Button } from '@shared/ui/components/button';
+import { Achievements } from '@shared/icons/achievements';
 
 const icons = {
   personalDetails: PersonalInfo,
@@ -15,6 +16,7 @@ const icons = {
   experience: Experience,
   education: Education,
   skills: Skills,
+  achievements: Achievements,
 };
 
 export function Sidebar() {
@@ -39,7 +41,7 @@ export function Sidebar() {
 
       <div className="flex flex-col gap-2 mt-12 w-full pl-6">
         {navs.map((nav) => {
-          const Icon = icons[nav.name as keyof typeof icons];
+          const Icon = icons[nav.name as keyof typeof icons] ?? ProfessionalSummary;
 
           return (
             <button
@@ -70,7 +72,7 @@ export function Sidebar() {
         })}
       </div>
 
-      <div
+      {/* <div
         className="w-[217px] rounded-3xl p-4 mt-auto"
         style={{
           background: 'linear-gradient(136.27deg, #257AFF 30.51%, #171717 65.75%)',
@@ -82,7 +84,7 @@ export function Sidebar() {
         </p>
 
         <Button className="w-full mt-4 bg-[#006BFF] border border-[#94CDFF] h-8 w-fit">Sign In</Button>
-      </div>
+      </div> */}
     </div>
   );
 }

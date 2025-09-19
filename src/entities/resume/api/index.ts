@@ -187,7 +187,7 @@ const data = {
     fluid: true,
     collapsedState: {
       titleKey: 'degree',
-      subTitleKey: 'startDate',
+      subTitleKey: 'institution',
     },
 
     institution: {
@@ -315,11 +315,25 @@ export async function getResumeTemplate(id: string): Promise<JSON> {
   return data.json();
 }
 
-export async function saveFormData<T extends keyof ResumeData>(type: T, data: ResumeData[T]): Promise<any> {
-  // const response = await fetch('resume/save', {
-  //   options: {
-  //     method: 'POST',
-  //     body: JSON.stringify(data),
-  //   },
-  // });
+export async function saveFormData<T extends keyof ResumeData>(type: T, id: string, data: ResumeData[T]): Promise<any> {
+  let url = 'personal-details';
+
+  if (type === 'education') {
+    url = 'education';
+  } else if (type === 'experience') {
+    url = 'experience';
+  } else if (type === 'skills') {
+    url = 'skills';
+  } else if (type === 'projects') {
+    url = 'projects';
+  }
+
+  const res = await fetch(`${url}/${id}`, {
+    options: {
+      method: 'POST',
+      body: JSON.stringify(data),
+    },
+  });
+
+  return res;
 }

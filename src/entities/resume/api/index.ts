@@ -14,8 +14,9 @@ const data = {
       placeholder: 'Enter your heading',
       required: true,
     },
-    name: {
-      name: 'name',
+
+    fullName: {
+      name: 'fullName',
       type: 'text',
       label: 'Name',
       placeholder: 'Enter your name',
@@ -78,11 +79,11 @@ const data = {
       required: true,
       fluid: true,
     },
-    description: {
-      name: 'description',
+    summary: {
+      name: 'summary',
       type: 'textarea',
       placeholder: 'Enter your summary',
-      label: 'Description',
+      label: 'Summary',
       required: true,
       fluid: true,
     },
@@ -91,63 +92,61 @@ const data = {
     label: 'Experience',
     subTitle:
       'Show your relevant experience (last 10 years). Use bullet points to note your achievements, if possible - use numbers/facts (Achieved X, measured by Y, by doing Z).',
-    heading: {
-      name: 'heading',
+    title: {
+      name: 'title',
       type: 'text',
       placeholder: 'Enter your heading',
-      label: 'Heading',
+      label: 'Title',
       required: true,
       fluid: true,
     },
-    list: {
-      name: 'list',
-      type: 'draggable',
+
+    itemsType: 'draggable',
+
+    collapsedState: {
+      titleKey: 'company',
+      subTitleKey: 'startDate',
+    },
+
+    company: {
+      name: 'company',
+      type: 'text',
+      placeholder: 'Enter your company',
+      required: true,
+      label: 'Company',
+    },
+
+    position: {
+      name: 'position',
+      type: 'text',
+      placeholder: 'Enter your position',
+      required: true,
+      label: 'Position',
+    },
+
+    location: {
+      name: 'location',
+      type: 'text',
+      placeholder: 'Enter your location',
+      required: true,
+      label: 'Location',
+    },
+
+    startDate: {
+      name: 'startDate',
+      type: 'text',
+      placeholder: 'Enter your start date',
+      required: true,
+      label: 'Start Date',
+    },
+
+    description: {
+      name: 'description',
+      type: 'textarea',
+      placeholder: 'Enter your description',
+      required: true,
+      label: 'Description',
       fluid: true,
-      collapsedState: {
-        titleKey: 'company',
-        subTitleKey: 'startDate',
-      },
-
-      company: {
-        name: 'company',
-        type: 'text',
-        placeholder: 'Enter your company',
-        required: true,
-        label: 'Company',
-      },
-
-      position: {
-        name: 'position',
-        type: 'text',
-        placeholder: 'Enter your position',
-        required: true,
-        label: 'Position',
-      },
-
-      location: {
-        name: 'location',
-        type: 'text',
-        placeholder: 'Enter your location',
-        required: true,
-        label: 'Location',
-      },
-
-      startDate: {
-        name: 'startDate',
-        type: 'text',
-        placeholder: 'Enter your start date',
-        required: true,
-        label: 'Start Date',
-      },
-
-      description: {
-        name: 'description',
-        type: 'textarea',
-        placeholder: 'Enter your description',
-        required: true,
-        label: 'Description',
-        fluid: true,
-      },
     },
   },
   // skills: {
@@ -183,133 +182,53 @@ const data = {
       fluid: true,
     },
 
-    list: {
-      name: 'list',
-      type: 'draggable',
-      fluid: true,
-      collapsedState: {
-        titleKey: 'degree',
-        subTitleKey: 'startDate',
-      },
+    itemsType: 'draggable',
 
-      institution: {
-        name: 'institution',
-        type: 'text',
-        placeholder: 'Enter your school',
-        required: true,
-        label: 'School',
-      },
-
-      degree: {
-        name: 'degree',
-        type: 'text',
-        placeholder: 'Enter your degree',
-        required: true,
-        label: 'Degree',
-      },
-
-      startDate: {
-        name: 'startDate',
-        type: 'text',
-        placeholder: 'Enter your start date',
-        required: true,
-        label: 'Start Date',
-      },
-
-      location: {
-        name: 'location',
-        type: 'text',
-        placeholder: 'Enter your city',
-        required: true,
-        label: 'City',
-      },
-
-      fieldOfStudy: {
-        name: 'fieldOfStudy',
-        type: 'text',
-        placeholder: 'Enter your field of study',
-        required: true,
-        label: 'Field of Study',
-      },
+    fluid: true,
+    collapsedState: {
+      titleKey: 'degree',
+      subTitleKey: 'startDate',
     },
-  },
-};
 
-const resumeData = {
-  personalDetails: {
-    id: 'personal-1',
-    title: 'Personal Details',
-    items: [
-      {
-        id: 'pd-1',
-        fullName: '',
-        email: '',
-        title: '',
-        phone: '',
-        address: '',
-        linkedin: '',
-        github: '',
-      },
-    ],
-  },
+    institution: {
+      name: 'institution',
+      type: 'text',
+      placeholder: 'Enter your school',
+      required: true,
+      label: 'School',
+    },
 
-  professionalSummary: {
-    id: 'professional-1',
-    title: 'Professional Summary',
-    items: [
-      {
-        id: 'ps-1',
-        summary: '',
-      },
-    ],
-  },
+    degree: {
+      name: 'degree',
+      type: 'text',
+      placeholder: 'Enter your degree',
+      required: true,
+      label: 'Degree',
+    },
 
-  experience: {
-    id: 'exp-1',
-    title: 'Experience',
-    items: [
-      {
-        id: 'exp-1-1',
-        company: '',
-        position: '',
-        location: '',
-        startDate: '',
-        endDate: '',
-        ongoing: true,
-        link: '',
-        description: '',
-      },
-    ],
-  },
+    startDate: {
+      name: 'startDate',
+      type: 'text',
+      placeholder: 'Enter your start date',
+      required: true,
+      label: 'Start Date',
+    },
 
-  skills: {
-    id: 'skills-1',
-    title: 'Skills',
-    items: [
-      {
-        id: 'skill-1',
-        name: '',
-        category: 'Programming Languages',
-        level: 'Expert',
-      },
-    ],
-  },
+    fieldOfStudy: {
+      name: 'fieldOfStudy',
+      type: 'text',
+      placeholder: 'Enter your field of study',
+      required: true,
+      label: 'Field of Study',
+    },
 
-  education: {
-    id: 'education-1',
-    title: 'Education',
-    items: [
-      {
-        id: 'edu-1',
-        degree: '',
-        institution: '',
-        fieldOfStudy: '',
-        startDate: '',
-        endDate: '',
-        grade: '',
-        ongoing: false,
-      },
-    ],
+    grade: {
+      name: 'grade',
+      type: 'text',
+      placeholder: 'Enter your grade',
+      required: true,
+      label: 'Grade',
+    },
   },
 };
 
@@ -321,7 +240,7 @@ export async function getResumeData(id: string): Promise<ResumeData> {
       id: 'pd-1',
       fullName: 'John Doe',
       email: 'john.doe@example.com',
-      title: '',
+      title: 'Engineer',
       phone: '1234567890',
       address: '123 Main St, Anytown, USA',
       linkedin: 'https://www.linkedin.com/in/john-doe',
@@ -357,7 +276,7 @@ export async function getResumeData(id: string): Promise<ResumeData> {
       endDate: '2024-01-01',
       ongoing: true,
       link: 'https://www.google.com',
-      description: '',
+      description: 'qweqwe',
     });
   }
 
@@ -394,4 +313,13 @@ export async function getResumeTemplate(id: string): Promise<JSON> {
   const data = await fetch(`template/${id}`);
 
   return data.json();
+}
+
+export async function saveFormData<T extends keyof ResumeData>(type: T, data: ResumeData[T]): Promise<any> {
+  // const response = await fetch('resume/save', {
+  //   options: {
+  //     method: 'POST',
+  //     body: JSON.stringify(data),
+  //   },
+  // });
 }

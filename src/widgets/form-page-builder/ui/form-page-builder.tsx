@@ -7,7 +7,6 @@ import { Button } from '@shared/ui/button';
 import { useEffect } from 'react';
 import { useFormPageBuilder } from '../models/ctx';
 import { useFormDataStore } from '../models/store';
-import Image from 'next/image';
 import { camelToHumanString } from '@shared/lib/string';
 
 const width = 580;
@@ -16,13 +15,17 @@ export function FormPageBuilder({ formSchema, defaultValues }: { formSchema: For
 
   const formData = useFormDataStore((state) => state.formData);
   const setFormData = useFormDataStore((state) => state.setFormData);
+  // const saveMutation = useMutation({
+  //   mutationFn: saveFormDataAPI,
+  // });
 
   useEffect(() => {
     useFormDataStore.setState({ formData: defaultValues ?? {} });
   }, [defaultValues]);
 
-  // const currentStepSchema = formSchema.filter((item) => item.name === currentStep);
-  // const nextStepIndex = formSchema.findIndex((item) => item.name === currentStep) + 1;
+  function handleNextStep() {
+    setCurrentStep(navs[nextStepIndex]?.name ?? '');
+  }
 
   const nextStepIndex = navs.findIndex((item) => item.name === currentStep) + 1;
 
@@ -69,7 +72,7 @@ export function FormPageBuilder({ formSchema, defaultValues }: { formSchema: For
         <div className="mt-[20px] cursor-pointer z-100 relative ml-auto flex">
           <Button
             className="mt-auto ml-auto bg-[#E9F4FF] w-[247px] h-[48px] rounded-[8px] text-sm font-semibold text-[#005FF2] hover:bg-blue-700 hover:text-white border border-[#CBE7FF]"
-            onClick={() => setCurrentStep(navs[nextStepIndex]?.name ?? '')}
+            onClick={() => {}}
           >
             Next: {camelToHumanString(navs[nextStepIndex]?.name ?? '')}
           </Button>

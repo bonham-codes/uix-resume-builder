@@ -1,11 +1,12 @@
+import type { ResumeDataKey } from '@entities/resume/types';
 import { createContext, useContext } from 'react';
 
 export const FormPageBuilderContext = createContext<{
-  currentStep: string;
+  currentStep: ResumeDataKey;
   setCurrentStep: React.Dispatch<React.SetStateAction<string>>;
   navs: { label: string; name: string }[];
 }>({
-  currentStep: '',
+  currentStep: 'personalDetails',
   setCurrentStep: () => {},
   navs: [],
 });

@@ -69,7 +69,7 @@ export default function DashboardLayout() {
                 </h1>
               </div>
 
-                <WelcomeHeader />
+              <WelcomeHeader userName={(user?.firstName ?? "") + " " + (user?.lastName ?? "")}/>
                 
               <div className="px-4">
                 <ResumeCreationCard/>

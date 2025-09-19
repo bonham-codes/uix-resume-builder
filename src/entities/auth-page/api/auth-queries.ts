@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useUserStore } from '../store/user-store';
 import { fetch } from '@shared/api';
 import { useRouter } from 'next/navigation';
 
@@ -42,10 +41,7 @@ interface LogoutResponse{
   message:string
 }
 
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
-
- export const fetchUserDetails = async (userId: string): Promise<User> => {
+export const fetchUserDetails = async (userId: string): Promise<User> => {
 
   const response = await fetch<User>(`auth/${userId}`, {
     options: {
@@ -168,19 +164,16 @@ export const useLoginUser = () => {
 
 export const useLogoutUser = () => {
   const queryClient = useQueryClient();
-  const clearUser = useUserStore((state) => state.clearUser);
   const router = useRouter();
 
   return useMutation({
     mutationFn: logoutUserAPI,
     onSuccess: (data) => {
-      clearUser();
       localStorage.removeItem("linkedin_oauth_state");
       queryClient.clear();
       router.push('/auth');
     },
     onError: (error) => {
-      clearUser();
       localStorage.removeItem("linkedin_oauth_state");
       queryClient.clear();
       router.push('/auth');

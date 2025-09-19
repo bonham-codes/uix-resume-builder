@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUserStore } from '../store/user-store';
+import { fetch } from '@shared/api';
 
 interface EmailCheckResponse {
   emailExists?: boolean;
@@ -43,12 +44,15 @@ export const fetchUserDetails = async (userId: string): Promise<User> => {
  const token = localStorage.getItem('authToken');
 
   const response = await fetch(`${BACKEND_URL}/auth/${userId}`, {
-    method: 'GET',
+    options:{
+      method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,  
     },
     credentials: 'include', 
+
+    }
   });
 
   if (!response.ok) {
@@ -60,11 +64,13 @@ export const fetchUserDetails = async (userId: string): Promise<User> => {
 
 const checkEmailExistsAPI = async (email: string): Promise<EmailCheckResponse> => {
   const response = await fetch(`${BACKEND_URL}/auth/check-email`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+    options: {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
     },
-    body: JSON.stringify({ email }),
   });
 
   if (!response.ok) {
@@ -76,11 +82,13 @@ const checkEmailExistsAPI = async (email: string): Promise<EmailCheckResponse> =
 
 const verifyOtpAPI = async ({ email, otp }: { email: string; otp: string }): Promise<boolean> => {
   const response = await fetch(`${BACKEND_URL}/auth/verify-otp`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+   options: {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, otp }),
     },
-    body: JSON.stringify({ email, otp }),
   });
 
   if (!response.ok) {
@@ -93,11 +101,13 @@ const verifyOtpAPI = async ({ email, otp }: { email: string; otp: string }): Pro
 
 const registerUserAPI = async (userData: RegisterUserData): Promise<AuthResponse> => {
   const response = await fetch(`${BACKEND_URL}/auth/register`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+   options: {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
     },
-    body: JSON.stringify(userData),
   });
 
   if (!response.ok) {
@@ -109,11 +119,13 @@ const registerUserAPI = async (userData: RegisterUserData): Promise<AuthResponse
 
 const loginUserAPI = async ({ email, password }: { email: string; password: string }): Promise<AuthResponse> => {
   const response = await fetch(`${BACKEND_URL}/auth/email-signin`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+    options: {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
     },
-    body: JSON.stringify({ email, password }),
   });
 
   if (!response.ok) {

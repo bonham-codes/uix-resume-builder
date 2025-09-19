@@ -315,7 +315,13 @@ export async function getResumeTemplate(id: string): Promise<JSON> {
   return data.json();
 }
 
-export async function saveFormData<T extends keyof ResumeData>(type: T, id: string, data: ResumeData[T]): Promise<any> {
+export async function saveFormData<T extends keyof ResumeData>({
+  type,
+  data,
+}: {
+  type: T;
+  data: ResumeData[T];
+}): Promise<any> {
   let url = 'personal-details';
 
   if (type === 'education') {
@@ -328,9 +334,11 @@ export async function saveFormData<T extends keyof ResumeData>(type: T, id: stri
     url = 'projects';
   }
 
-  const res = await fetch(`${url}/${id}`, {
+  console.log(type);
+
+  const res = await fetch(`${url}/${data.id}`, {
     options: {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(data),
     },
   });

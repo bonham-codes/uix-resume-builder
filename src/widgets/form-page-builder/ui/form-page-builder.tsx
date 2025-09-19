@@ -8,6 +8,8 @@ import { useEffect } from 'react';
 import { useFormPageBuilder } from '../models/ctx';
 import { useFormDataStore } from '../models/store';
 import { camelToHumanString } from '@shared/lib/string';
+import { saveFormData } from '@entities/resume/api';
+import { useMutation } from '@tanstack/react-query';
 
 const width = 580;
 export function FormPageBuilder({ formSchema, defaultValues }: { formSchema: FormSchema; defaultValues: any }) {
@@ -16,17 +18,16 @@ export function FormPageBuilder({ formSchema, defaultValues }: { formSchema: For
   const formData = useFormDataStore((state) => state.formData);
   const setFormData = useFormDataStore((state) => state.setFormData);
 
-  // const saveMutation = useMutation({
-  //   mutationFn: () => saveFormData(currentStep, formData.id, formData),
-  // });
-
-  console.log(currentStep);
+  const saveMutation = useMutation({
+    mutationFn: saveFormData,
+  });
 
   useEffect(() => {
     useFormDataStore.setState({ formData: defaultValues ?? {} });
   }, [defaultValues]);
 
-  function handleNextStep() {
+  async function handleNextStep() {
+    await saveMutation.mutateAsync({ type: currentStep, data: formData[currentStep] });
     setCurrentStep(navs[nextStepIndex]?.name ?? '');
   }
 
@@ -77,7 +78,7 @@ export function FormPageBuilder({ formSchema, defaultValues }: { formSchema: For
         <div className="mt-[20px] cursor-pointer z-100 relative ml-auto flex">
           <Button
             className="mt-auto ml-auto bg-[#E9F4FF] w-[247px] h-[48px] rounded-[8px] text-sm font-semibold text-[#005FF2] hover:bg-blue-700 hover:text-white border border-[#CBE7FF]"
-            onClick={() => {}}
+            onClick={handleNextStep}
           >
             Next: {camelToHumanString(navs[nextStepIndex]?.name ?? '')}
           </Button>

@@ -37,24 +37,6 @@ interface User {
   isLoggedIn: boolean;
 }
 
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
-
-// export const fetchUserDetails = async (userId: string): Promise<User> => {
-//  const token = localStorage.getItem('authToken');
-
-//   const response = await fetch(`${BACKEND_URL}/auth/${userId}`, {
-//     options:{
-//       method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${token}`,  
-//     },
-//     credentials: 'include', 
-
-//     }
-//   });
-
  export const fetchUserDetails = async (userId: string): Promise<User> => {
 
   const response = await fetch<User>(`auth/${userId}`, {

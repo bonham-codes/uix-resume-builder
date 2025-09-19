@@ -6,12 +6,10 @@ import {
   SidebarGroupContent, 
   SidebarGroupLabel, 
   SidebarHeader,
-  SidebarFooter,
   SidebarMenu, 
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@shared/ui/sidebar";
-import { Button } from "@shared/ui/button";
 import { 
   Home, 
   FileText, 
@@ -19,9 +17,6 @@ import {
   HelpCircle, 
   LogOut, 
   Sparkles, 
-  Linkedin,
-  Layout,
-  Crown
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

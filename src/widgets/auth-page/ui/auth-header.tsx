@@ -18,17 +18,17 @@ export function AuthHeader() {
       </div>
 
       <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600">
-        <Link href="/about" className="hover:text-slate-800 transition-colors">
+        <Link href="https://uixlabs.co/our-team" className="hover:text-slate-800 transition-colors">
           About Us
         </Link>
 
-        <Link href="/explore" className="hover:text-slate-800 transition-colors">
+        {/* <Link href="/explore" className="hover:text-slate-800 transition-colors">
           Explore
         </Link>
 
         <Link href="/faqs" className="hover:text-slate-800 transition-colors">
           FAQs
-        </Link>
+        </Link> */}
       </nav>
     </motion.header>
   );

@@ -46,7 +46,7 @@ const HeroSection = () => {
       id: 'hired',
       content: (
         <div className="overlay-item">
-          <img src="images/image-7.svg" alt="Hired at Meta" className="w-full h-auto" />
+          <img src="images/image-hired.svg" alt="Hired at Meta" className="w-full h-auto" />
         </div>
       ),
       position: { top: '80%', right: '-7%' },

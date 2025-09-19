@@ -38,7 +38,6 @@ export default function LinkedInCallbackClient() {
 
       try {
         setSuccess('Authenticating with backend...');
-        console.log('code', code);
 
         const authResponse = await sendAuthCodeToBackend(code);
 

@@ -85,57 +85,8 @@ export type ResumeData = {
       ongoing: boolean;
     }>;
   };
+
+  templateId: string;
 };
 
-export type TransformedResumeData = {
-  personalDetails: {
-    name: string;
-    title: string;
-    email: string;
-    phone: string;
-    address: string;
-    linkedin: string;
-    github: string;
-  };
-  professionalSummary: {
-    heading: string;
-    description: string;
-  };
-
-  skills: {
-    heading: string;
-    list: {
-      label: string;
-      value: string[];
-    }[];
-  };
-
-  experience: {
-    heading: string;
-    list: {
-      id: string;
-      company: string;
-      position: string;
-      location: string;
-      startDate: string;
-      endDate: string;
-      ongoing: boolean;
-      link: string;
-      description: string;
-    }[];
-  };
-
-  education: {
-    heading: string;
-    list: {
-      id: string;
-      degree: string;
-      institution: string;
-      fieldOfStudy: string;
-      startDate: string;
-      endDate: string;
-      grade: string;
-      ongoing: boolean;
-    }[];
-  };
-};
+export type ResumeDataKey = keyof ResumeData;

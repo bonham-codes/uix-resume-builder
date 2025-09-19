@@ -27,14 +27,20 @@ export default function AuthPageWidget() {
     'initial',
   );
 
-  const [isExistingUser, setIsExistingUser] = useState(false);
   const [email, setEmail] = useState('');
+
   const [loginCode, setLoginCode] = useState('');
+
   const [firstName, setFirstName] = useState('');
+
   const [lastName, setLastName] = useState('');
+
   const [password, setPassword] = useState('');
+
   const [confirmPassword, setConfirmPassword] = useState('');
+
   const [socialAccounts, setSocialAccounts] = useState<string[]>([]);
+
   const [showPassword, setShowPassword] = useState({
     password: true,
     confirmPassword: true,
@@ -52,9 +58,13 @@ export default function AuthPageWidget() {
       [field]: !prev[field],
     }));
   };
+
   const checkEmailMutation = useCheckEmailExists();
+
   const verifyOtpMutation = useVerifyOtp();
+
   const registerMutation = useRegisterUser();
+
   const loginMutation = useLoginUser();
 
   const clearErrors = () => {
@@ -83,11 +93,9 @@ export default function AuthPageWidget() {
             setSocialAccounts(emailCheckResult.socialAccounts);
             setStep('socialAccounts');
           } else {
-            setIsExistingUser(true);
             setStep('password');
           }
         } else {
-          setIsExistingUser(false);
           setStep('code');
 
           setTimeout(() => {

@@ -17,7 +17,6 @@ import {
   HelpCircle, 
   LogOut, 
   Sparkles, 
-
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -136,13 +135,13 @@ export default function DashboardSidebar() {
 
               <SidebarMenuItem>
                 <SidebarMenuButton 
-                  
+                  asChild 
                   className="h-9 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                 >
-                  <div className="flex items-center">
+                  <Link href="/logout">
                     <LogOut className="w-5 h-5" />
                     Logout
-                  </div>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>

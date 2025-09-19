@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUserStore } from '../store/user-store';
 import { fetch } from '@shared/api';
-import { useRouter } from 'next/navigation';
 
 interface EmailCheckResponse {
   emailExists?: boolean;
@@ -36,10 +35,6 @@ interface User {
   password: string;
   isVerified: boolean;
   isLoggedIn: boolean;
-}
-
-interface LogoutResponse {
-  message: string;
 }
 
  export const fetchUserDetails = async (userId: string): Promise<User> => {

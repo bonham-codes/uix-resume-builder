@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
     // ❗ This will ignore type errors during build
     ignoreBuildErrors: true,
   },
+  output: 'standalone',
   
 };
 

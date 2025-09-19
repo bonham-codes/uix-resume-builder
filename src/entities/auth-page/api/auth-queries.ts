@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUserStore } from '../store/user-store';
 import { fetch } from '@shared/api';
+import { useRouter } from 'next/navigation';
 
 interface EmailCheckResponse {
   emailExists?: boolean;
@@ -37,23 +38,12 @@ interface User {
   isLoggedIn: boolean;
 }
 
+interface LogoutResponse{
+  message:string
+}
+
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
-
-// export const fetchUserDetails = async (userId: string): Promise<User> => {
-//  const token = localStorage.getItem('authToken');
-
-//   const response = await fetch(`${BACKEND_URL}/auth/${userId}`, {
-//     options:{
-//       method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${token}`,  
-//     },
-//     credentials: 'include', 
-
-//     }
-//   });
 
  export const fetchUserDetails = async (userId: string): Promise<User> => {
 
@@ -127,6 +117,21 @@ const loginUserAPI = async ({ email, password }: { email: string; password: stri
   return response;
 };
 
+const logoutUserAPI = async (): Promise<LogoutResponse> => {
+  const response = await fetch<LogoutResponse>('auth/logout', {
+    options: {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    },
+  });
+
+  return response;
+};
+
+
 export const useCheckEmailExists = () => {
   return useMutation({
     mutationFn: checkEmailExistsAPI,
@@ -141,15 +146,10 @@ export const useVerifyOtp = () => {
 
 export const useRegisterUser = () => {
   const queryClient = useQueryClient();
-  const setUser = useUserStore((state) => state.setUser);
 
   return useMutation({
     mutationFn: registerUserAPI,
     onSuccess: (data) => {
-      if (data.token) {
-        localStorage.setItem('authToken', data.token);
-      }
-      setUser({ ...data.user, token: data.token });
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
@@ -157,19 +157,36 @@ export const useRegisterUser = () => {
 
 export const useLoginUser = () => {
   const queryClient = useQueryClient();
-  const setUser = useUserStore((state) => state.setUser);
 
   return useMutation({
     mutationFn: loginUserAPI,
     onSuccess: (data) => {
-      if (data.token) {
-        localStorage.setItem('authToken', data.token);
-      }
-      setUser({ ...data.user, token: data.token });
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
 };
+
+export const useLogoutUser = () => {
+  const queryClient = useQueryClient();
+  const clearUser = useUserStore((state) => state.clearUser);
+  const router = useRouter();
+
+  return useMutation({
+    mutationFn: logoutUserAPI,
+    onSuccess: (data) => {
+      clearUser();
+      localStorage.removeItem("linkedin_oauth_state");
+      queryClient.clear();
+      router.push('/auth');
+    },
+    onError: (error) => {
+      clearUser();
+      localStorage.removeItem("linkedin_oauth_state");
+      queryClient.clear();
+      router.push('/auth');
+    },
+  });
+}
 
 export const validateEmail = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

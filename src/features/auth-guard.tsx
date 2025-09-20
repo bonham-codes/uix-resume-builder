@@ -5,6 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 const PUBLIC_ROUTES = [
+  '/',                          
   '/auth',
   '/auth/google/callback',
   '/auth/linkedin/callback',
@@ -39,7 +40,11 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     }
 
     if (user?.isLoggedIn && pathname === '/auth') {
-      router.push('/dashboard');
+      if (user.isVerified) {
+        router.push('/dashboard');
+      } else {
+        router.push('/auth'); 
+      }
       return;
     }
   }, [user, isLoading, isError, isPublicRoute, pathname, router]);
@@ -53,7 +58,11 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
   }
 
   if (user?.isLoggedIn && pathname === '/auth') {
-    return <LoadingSpinner />;
+    if (user.isVerified) {
+      return <LoadingSpinner />;
+    } else {
+      
+    }
   }
 
   return <>{children}</>;
